@@ -34,6 +34,9 @@ void ld46::Update(const orxCLOCK_INFO &_rstInfo)
  */
 orxSTATUS ld46::Init()
 {
+    // Initialize random seeds
+    orxMath_InitRandom(orxF2U(orxSystem_GetSystemTime() * 1000.0f));
+
     // Initialize Dear ImGui
     orxImGui_Init();
 
