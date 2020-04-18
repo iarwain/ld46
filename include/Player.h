@@ -24,7 +24,7 @@ protected:
 
 
 private:
-                orxBOOL         IsDashing;
+                orxBOOL         bIsDashing;
     static      void orxFASTCALL ResetDash(const orxCLOCK_INFO* _pstClockInfo, void* _pContext);
 };
 

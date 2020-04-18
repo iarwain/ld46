@@ -7,16 +7,26 @@
 
 void orxFASTCALL Player::ResetDash(const orxCLOCK_INFO *_pstClockInfo, void *_pContext)
 {
-    Player *Player = (class Player *)_pContext;
-    Player->IsDashing = orxFALSE;
-    Player->SetSpeed(orxVECTOR_0);
+    Player *poPlayer = (Player *)_pContext;
+    poPlayer->bIsDashing = orxFALSE;
+    poPlayer->SetSpeed(orxVECTOR_0);
 }
 
 void Player::OnCreate()
 {
     Object::OnCreate();
     orxConfig_SetBool("IsPlayer", orxTRUE);
+
+    // Enables its inputs
     orxInput_EnableSet(orxConfig_GetString("Input"), orxTRUE);
+
+    // Inits lamp
+    orxFLOAT fLampCapacity = orxConfig_GetFloat("LampCapacity");
+    orxCHAR acName[32] = {};
+    orxString_NPrint(acName, sizeof(acName) - 1, "%sOil", GetModelName());
+    orxConfig_PushSection("Runtime");
+    orxConfig_SetFloat(acName, fLampCapacity);
+    orxConfig_PopSection();
 }
 
 void Player::OnDelete()
@@ -30,32 +40,52 @@ void Player::Update(const orxCLOCK_INFO &_rstInfo)
 
     Object::Update(_rstInfo);
 
-    const orxSTRING zSet = orxInput_GetCurrentSet();
-    orxInput_SelectSet(orxConfig_GetString("Input"));
+    orxFLOAT fLampBurnRate = orxConfig_GetFloat("LampBurnRate");
+    orxCHAR acName[32] = {};
+    orxString_NPrint(acName, sizeof(acName) - 1, "%sOil", GetModelName());
+    orxConfig_PushSection("Runtime");
+    orxFLOAT fLampOil = orxConfig_GetFloat(acName);
+    fLampOil = orxMAX(fLampOil - fLampBurnRate * _rstInfo.fDT, orxFLOAT_0);
+    orxConfig_SetFloat(acName, fLampOil);
+    orxConfig_PopSection();
 
-    // Dash
-    if(!IsDashing)
+    if(fLampOil == orxFLOAT_0)
     {
-        // Move
-        orxVECTOR vSpeed = {orxInput_GetValue("MoveRight") - orxInput_GetValue("MoveLeft"), orxInput_GetValue("MoveDown") - orxInput_GetValue("MoveUp"), orxFLOAT_0};
+        //! Game Over
+    }
+    else
+    {
+        orxVECTOR vScale = {fLampOil, fLampOil, orxFLOAT_0};
+
+        GetOwnedChild()->SetScale(vScale);
+
+        const orxSTRING zSet = orxInput_GetCurrentSet();
+        orxInput_SelectSet(orxConfig_GetString("Input"));
 
         // Dash
-        if(orxInput_HasBeenActivated("Dash"))
+        if(!bIsDashing)
         {
-            orxVector_Mulf(&vSpeed, &vSpeed, orxConfig_GetFloat("DashSpeed"));
-            IsDashing = orxTRUE;
-            orxClock_AddGlobalTimer(ResetDash, orxConfig_GetFloat("DashDuration"), 1, this);
-        }
-        else
-        {
-            orxVector_Mulf(&vSpeed, &vSpeed, orxConfig_GetFloat("Speed"));
+            // Move
+            orxVECTOR vSpeed = {orxInput_GetValue("MoveRight") - orxInput_GetValue("MoveLeft"), orxInput_GetValue("MoveDown") - orxInput_GetValue("MoveUp"), orxFLOAT_0};
+
+            // Dash
+            if(orxInput_HasBeenActivated("Dash"))
+            {
+                orxVector_Mulf(&vSpeed, &vSpeed, orxConfig_GetFloat("DashSpeed"));
+                bIsDashing = orxTRUE;
+                orxClock_AddGlobalTimer(ResetDash, orxConfig_GetFloat("DashDuration"), 1, this);
+            }
+            else
+            {
+                orxVector_Mulf(&vSpeed, &vSpeed, orxConfig_GetFloat("Speed"));
+            }
+
+            // Set speed
+            SetSpeed(vSpeed);
         }
 
-        // Set speed
-        SetSpeed(vSpeed);
+        orxInput_SelectSet(zSet);
     }
-
-    orxInput_SelectSet(zSet);
 
     PopConfigSection();
 }
