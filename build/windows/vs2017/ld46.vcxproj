@@ -27,7 +27,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{5A114245-99CE-1346-A202-32834A57BD60}</ProjectGuid>
+    <ProjectGuid>{AD1A3B0B-65D4-3E4C-8FE0-AFCE0F0D7FAE}</ProjectGuid>
     <RootNamespace>ld46</RootNamespace>
     <Keyword>Win32Proj</Keyword>
   </PropertyGroup>
@@ -366,6 +366,7 @@
   <ItemGroup>
     <ClInclude Include="..\..\..\include\ld46.h" />
     <ClInclude Include="..\..\..\include\Object.h" />
+    <ClInclude Include="..\..\..\include\Player.h" />
     <ClInclude Include="..\..\..\include\imgui\imconfig.h" />
     <ClInclude Include="..\..\..\include\imgui\imgui.h" />
     <ClInclude Include="..\..\..\include\imgui\imgui_internal.h" />
@@ -385,6 +386,8 @@
     <ClCompile Include="..\..\..\src\orxArchive.cpp">
     </ClCompile>
     <ClCompile Include="..\..\..\src\orxImGui.cpp">
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\Player.cpp">
     </ClCompile>
     <ClCompile Include="..\..\..\src\imgui\imgui.cpp">
     </ClCompile>

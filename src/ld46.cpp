@@ -8,6 +8,7 @@
 #undef __SCROLL_IMPL__
 
 #include "Object.h"
+#include "Player.h"
 
 #define orxIMGUI_HEADER_ONLY
 #include "orxImGui.cpp"
@@ -33,19 +34,20 @@ void ld46::Update(const orxCLOCK_INFO &_rstInfo)
  */
 orxSTATUS ld46::Init()
 {
-    // Display a small hint in console
-    orxLOG("\n* This template project creates a simple scene"
-    "\n* You can play with the config parameters in ../data/config/ld46.ini"
-    "\n* After changing them, relaunch the executable to see the changes.");
-
-    // Display additional Dear ImGui hint in console
-    orxLOG("\n* This template also has support for Dear ImGui.");
-
     // Initialize Dear ImGui
     orxImGui_Init();
 
     // Initialize archive (ZIP) resource type
     orxArchive_Init();
+
+    // Pushes game section
+    orxConfig_PushSection("Game");
+
+    // Creates all viewports
+    for(orxS32 i = 0, iCount = orxConfig_GetListCount("ViewportList"); i < iCount; i++)
+    {
+        orxViewport_CreateFromConfig(orxConfig_GetListString("ViewportList", i));
+    }
 
     // Create the scene
     CreateObject("Scene");
@@ -78,6 +80,7 @@ void ld46::BindObjects()
 {
     // Bind the Object class to the Object config section
     ScrollBindObject<Object>("Object");
+    ScrollBindObject<Player>("Player");
 }
 
 /** Bootstrap function, it is called before config is initialized, allowing for early resource storage definitions

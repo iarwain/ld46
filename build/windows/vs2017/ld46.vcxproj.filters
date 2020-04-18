@@ -2,25 +2,25 @@
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <Filter Include="src">
-      <UniqueIdentifier>{BF8B5704-41FB-0E47-AE9C-68B09AB7B8F7}</UniqueIdentifier>
+      <UniqueIdentifier>{DC6A379C-102B-4B4E-9726-6C9BCB4FD7A0}</UniqueIdentifier>
     </Filter>
     <Filter Include="src\imgui">
-      <UniqueIdentifier>{E5AA7D05-3B6B-5B4B-A434-F19E7E1D084B}</UniqueIdentifier>
+      <UniqueIdentifier>{1FD296B6-5348-B440-8B49-01CD909F836E}</UniqueIdentifier>
     </Filter>
     <Filter Include="include">
-      <UniqueIdentifier>{F15ED6D5-EE05-5D4E-B7BD-C013EE534E7A}</UniqueIdentifier>
+      <UniqueIdentifier>{01982002-D65D-2840-9E73-7BD1AB1D6810}</UniqueIdentifier>
     </Filter>
     <Filter Include="include\imgui">
-      <UniqueIdentifier>{8AEDBDEE-DC01-F94B-A291-FB5C17777031}</UniqueIdentifier>
+      <UniqueIdentifier>{58A5D4E3-7440-EE47-BD2A-78DE614B9A66}</UniqueIdentifier>
     </Filter>
     <Filter Include="include\Scroll">
-      <UniqueIdentifier>{C2311700-54B3-4A4D-9CE3-56A5C8FB9C53}</UniqueIdentifier>
+      <UniqueIdentifier>{703F5AA3-ECE0-8545-AF9F-A72411D1DEA1}</UniqueIdentifier>
     </Filter>
     <Filter Include="inline">
-      <UniqueIdentifier>{8F46919D-B529-5D4D-AAF9-7D3413197D6F}</UniqueIdentifier>
+      <UniqueIdentifier>{7991780C-6ECA-A648-957C-24347B76BD05}</UniqueIdentifier>
     </Filter>
     <Filter Include="config">
-      <UniqueIdentifier>{AB3E2244-3D54-5F47-86AF-794A292E5389}</UniqueIdentifier>
+      <UniqueIdentifier>{F8B2A424-F64F-3149-AE49-4D1432DA17C8}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -57,6 +57,9 @@
       <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\include\Object.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\Player.h">
       <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\include\imgui\imconfig.h">
@@ -101,6 +104,9 @@
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\orxImGui.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\Player.cpp">
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\imgui\imgui.cpp">
