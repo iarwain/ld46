@@ -59,3 +59,16 @@ void Player::Update(const orxCLOCK_INFO &_rstInfo)
 
     PopConfigSection();
 }
+
+orxBOOL Player::OnCollide(ScrollObject *_poCollider, const orxSTRING _zPartName, const orxSTRING _zColliderPartName, const orxVECTOR &_rvPosition, const orxVECTOR &_rvNormal)
+{
+    if(orxString_SearchString(_zColliderPartName, "Oil"))
+    {
+        orxConfig_PushSection("Runtime");
+        orxConfig_SetU64("Collider", GetGUID());
+        orxConfig_PopSection();
+        _poCollider->AddConditionalTrack("PickUp");
+    }
+
+    return orxTRUE;
+}
