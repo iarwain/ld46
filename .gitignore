@@ -4,3 +4,4 @@ bin/imgui.ini
 build/windows/**/obj/*
 build/windows/**/.vs/*
 **.cih
+**/dev.ini
