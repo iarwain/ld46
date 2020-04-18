@@ -3,3 +3,4 @@ bin/imgui.ini
 **.pdb
 build/windows/**/obj/*
 build/windows/**/.vs/*
+**.cih

@@ -1,6 +1,7 @@
 syntax: glob
 bin/imgui.ini
-*.log
-*.pdb
+**.log
+**.pdb
 build/windows/**/obj/*
 build/windows/**/.vs/*
+**.cih
