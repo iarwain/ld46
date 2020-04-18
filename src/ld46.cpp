@@ -37,9 +37,6 @@ orxSTATUS ld46::Init()
     // Initialize Dear ImGui
     orxImGui_Init();
 
-    // Initialize archive (ZIP) resource type
-    orxArchive_Init();
-
     // Pushes game section
     orxConfig_PushSection("Game");
 
@@ -49,8 +46,25 @@ orxSTATUS ld46::Init()
         orxViewport_CreateFromConfig(orxConfig_GetListString("ViewportList", i));
     }
 
-    // Create the scene
-    CreateObject("Scene");
+    // For all sections
+    for(orxU32 i = 0, iCount = orxConfig_GetSectionCount(); i < iCount; i++)
+    {
+        // Pushes it
+        orxConfig_PushSection(orxConfig_GetSection(i));
+
+        // Has texture?
+        if(orxConfig_HasValue("Texture"))
+        {
+            // PreLoads it
+            orxTexture_CreateFromFile(orxConfig_GetString("Texture"), orxFALSE);
+        }
+
+        // Pops it
+        orxConfig_PopSection();
+    }
+
+    // Create the menu
+    CreateObject("Menu");
 
     // Done!
     return orxSTATUS_SUCCESS;
@@ -87,6 +101,9 @@ void ld46::BindObjects()
  */
 orxSTATUS ld46::Bootstrap() const
 {
+    // Initialize archive (ZIP) resource type
+    orxArchive_Init();
+
     // Add a config storage to find the initial config file
     orxResource_AddStorage(orxCONFIG_KZ_RESOURCE_GROUP, "../data/config", orxFALSE);
 
