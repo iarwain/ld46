@@ -1,0 +1,32 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2019
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ld46", "ld46.vcxproj", "{5CC121BD-8AF7-3941-AEE0-1C52B3946387}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Debug|Win32 = Debug|Win32
+		Profile|x64 = Profile|x64
+		Profile|Win32 = Profile|Win32
+		Release|x64 = Release|x64
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5CC121BD-8AF7-3941-AEE0-1C52B3946387}.Debug|x64.ActiveCfg = Debug|x64
+		{5CC121BD-8AF7-3941-AEE0-1C52B3946387}.Debug|x64.Build.0 = Debug|x64
+		{5CC121BD-8AF7-3941-AEE0-1C52B3946387}.Debug|Win32.ActiveCfg = Debug|Win32
+		{5CC121BD-8AF7-3941-AEE0-1C52B3946387}.Debug|Win32.Build.0 = Debug|Win32
+		{5CC121BD-8AF7-3941-AEE0-1C52B3946387}.Profile|x64.ActiveCfg = Profile|x64
+		{5CC121BD-8AF7-3941-AEE0-1C52B3946387}.Profile|x64.Build.0 = Profile|x64
+		{5CC121BD-8AF7-3941-AEE0-1C52B3946387}.Profile|Win32.ActiveCfg = Profile|Win32
+		{5CC121BD-8AF7-3941-AEE0-1C52B3946387}.Profile|Win32.Build.0 = Profile|Win32
+		{5CC121BD-8AF7-3941-AEE0-1C52B3946387}.Release|x64.ActiveCfg = Release|x64
+		{5CC121BD-8AF7-3941-AEE0-1C52B3946387}.Release|x64.Build.0 = Release|x64
+		{5CC121BD-8AF7-3941-AEE0-1C52B3946387}.Release|Win32.ActiveCfg = Release|Win32
+		{5CC121BD-8AF7-3941-AEE0-1C52B3946387}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,6 @@
+syntax: glob
+bin/imgui.ini
+*.log
+*.pdb
+build/windows/**/obj/*
+build/windows/**/.vs/*
