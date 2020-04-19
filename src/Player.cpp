@@ -101,6 +101,7 @@ void Player::Update(const orxCLOCK_INFO &_rstInfo)
                     orxVector_Mulf(&vSpeed, &vSpeed, orxConfig_GetFloat("DashSpeed"));
                     bIsDashing = orxTRUE;
                     orxClock_AddGlobalTimer(ResetDash, orxConfig_GetFloat("DashDuration"), 1, this);
+                    orxObject_CreateFromConfig("DashSound");
                 }
                 else
                 {
@@ -142,6 +143,18 @@ orxBOOL Player::OnCollide(ScrollObject *_poCollider, const orxSTRING _zPartName,
             orxConfig_SetU64("Collider", GetGUID());
             orxConfig_PopSection();
             _poCollider->AddConditionalTrack("PickUp");
+        }
+        else
+        {
+            if (bIsDashing)
+            {
+                orxConfig_PushSection(_zColliderPartName);
+                if (!orxConfig_GetBool("IsDoor"))
+                {
+                    orxObject_CreateFromConfig("HitSound");
+                }
+                orxConfig_PopSection();
+            }
         }
     }
 
