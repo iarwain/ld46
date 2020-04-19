@@ -26,8 +26,9 @@ protected:
 private:
     static      void orxFASTCALL ResetDash(const orxCLOCK_INFO* _pstClockInfo, void* _pContext);
 
-                orxBOOL         bIsDashing;
     const       orxSTRING       zLastAnim;
+                orxBOOL         bIsDashing;
+                orxBOOL         bIsDead;
 };
 
 #endif // __PLAYER_H__

@@ -34,6 +34,9 @@ void ld46::Update(const orxCLOCK_INFO &_rstInfo)
  */
 orxSTATUS ld46::Init()
 {
+    // Deactivate object debug messages
+    orxDEBUG_ENABLE_LEVEL(orxDEBUG_LEVEL_OBJECT, orxFALSE);
+
     // Initialize random seeds
     orxMath_InitRandom(orxF2U(orxSystem_GetSystemTime() * 1000.0f));
 
