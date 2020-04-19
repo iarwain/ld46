@@ -8,6 +8,7 @@
 #undef __SCROLL_IMPL__
 
 #include "Object.h"
+#include "Train.h"
 #include "Player.h"
 
 #define orxIMGUI_HEADER_ONLY
@@ -17,6 +18,8 @@
 #define orxARCHIVE_HEADER_ONLY
 #include "orxArchive.cpp"
 #undef orxARCHIVE_HEADER_ONLY
+
+static orxBOOL sbRestart = orxTRUE;
 
 orxSTATUS orxFASTCALL EventHandler(const orxEVENT *_pstEvent)
 {
@@ -31,37 +34,42 @@ orxSTATUS orxFASTCALL EventHandler(const orxEVENT *_pstEvent)
                 case orxSPAWNER_EVENT_WAVE_START:
                 {
                     orxConfig_PushSection("Runtime");
-                    const orxSTRING zTrain = orxConfig_GetString(orxSpawner_GetName(pstSpawner));
 
-                    if(zTrain != orxSTRING_EMPTY)
+                    orxOBJECT *pstTrain = orxOBJECT(orxStructure_Get(orxConfig_GetU64(orxSpawner_GetName(pstSpawner))));
+                    if(pstTrain)
                     {
-                        static orxU32 su32Count = 0;
-                        const orxSTRING zDifficulty;
+                        const orxSTRING zTrain = orxObject_GetName(pstTrain);
 
-                        orxConfig_PushSection("Game");
-                        if(!su32Count)
+                        if(zTrain != orxSTRING_EMPTY)
                         {
-                            zDifficulty = "Hard";
-                            su32Count = orxConfig_GetU32("HardDoorSkip");
+                            static orxU32 su32Count = 0;
+                            const orxSTRING zDifficulty;
+
+                            orxConfig_PushSection("Game");
+                            if(!su32Count)
+                            {
+                                zDifficulty = "Hard";
+                                su32Count = orxConfig_GetU32("HardDoorSkip");
+                            }
+                            else
+                            {
+                                zDifficulty = "Easy";
+                                su32Count--;
+                            }
+                            orxConfig_PopSection();
+
+                            orxConfig_PushSection(zTrain);
+                            const orxSTRING zType = orxConfig_GetBool("RightDoor") ? "Open" : "Close";
+                            orxConfig_PopSection();
+
+                            orxCHAR acName[32] = {};
+                            orxString_NPrint(acName, sizeof(acName) - 1, "%s%sDoor", zDifficulty, zType);
+                            const orxSTRING zNewTrain = orxConfig_GetString(acName);
+
+                            orxConfig_PushSection(orxSpawner_GetName(pstSpawner));
+                            orxConfig_SetString("Object", zNewTrain);
+                            orxConfig_PopSection();
                         }
-                        else
-                        {
-                            zDifficulty = "Easy";
-                            su32Count--;
-                        }
-                        orxConfig_PopSection();
-
-                        orxConfig_PushSection(zTrain);
-                        const orxSTRING zType = orxConfig_GetBool("RightDoor") ? "Open" : "Close";
-                        orxConfig_PopSection();
-
-                        orxCHAR acName[32] = {};
-                        orxString_NPrint(acName, sizeof(acName) - 1, "%s%sDoor", zDifficulty, zType);
-                        const orxSTRING zNewTrain = orxConfig_GetString(acName);
-
-                        orxConfig_PushSection(orxSpawner_GetName(pstSpawner));
-                        orxConfig_SetString("Object", zNewTrain);
-                        orxConfig_PopSection();
                     }
 
                     orxConfig_PopSection();
@@ -74,14 +82,20 @@ orxSTATUS orxFASTCALL EventHandler(const orxEVENT *_pstEvent)
 
                     if(orxString_SearchString(orxObject_GetName(pstObject), "Train"))
                     {
-                       orxSPAWNER *pstSpawner = orxSPAWNER(orxObject_GetOwner(pstObject));
+                        orxSPAWNER *pstSpawner = orxSPAWNER(orxObject_GetOwner(pstObject));
 
-                       if(pstSpawner)
-                       {
-                           orxConfig_PushSection("Runtime");
-                           orxConfig_SetString(orxSpawner_GetName(pstSpawner), orxObject_GetName(pstObject));
-                           orxConfig_PopSection();
-                       }
+                        if(pstSpawner)
+                        {
+                            orxConfig_PushSection("Runtime");
+                            orxOBJECT *pstPreviousTrain = orxOBJECT(orxStructure_Get(orxConfig_GetU64(orxSpawner_GetName(pstSpawner))));
+                            if(pstPreviousTrain)
+                            {
+                                Train *poTrain = (Train *)orxObject_GetUserData(pstObject);
+                                poTrain->u64PreviousGUID = orxStructure_GetGUID(pstPreviousTrain);
+                            }
+                            orxConfig_SetU64(orxSpawner_GetName(pstSpawner), orxStructure_GetGUID(pstObject));
+                            orxConfig_PopSection();
+                        }
                     }
 
                     break;
@@ -102,20 +116,53 @@ void ld46::Update(const orxCLOCK_INFO &_rstInfo)
     // Should quit?
     if(orxInput_HasBeenActivated("Quit"))
     {
+        // Should restart?
+        sbRestart = orxInput_HasBeenActivated("Reset");
+
         // Send close event
         orxEvent_SendShort(orxEVENT_TYPE_SYSTEM, orxSYSTEM_EVENT_CLOSE);
     }
+    // Reset?
     else if(orxInput_HasBeenActivated("Reset"))
     {
         PauseGame(orxFALSE);
         orxConfig_PushSection("Runtime");
-        DeleteObject(GetObject(orxConfig_GetU64("Menu")));
+        for(ScrollObject *poObject = GetNextObject();
+            poObject;
+            poObject = GetNextObject())
+        {
+            DeleteObject(poObject);
+        }
         CreateObject("Menu");
         orxConfig_PopSection();
     }
+    // Pause?
     else if(orxInput_HasBeenActivated("Pause"))
     {
         PauseGame(!IsGamePaused());
+    }
+    else
+    {
+        // Train fixup
+        for(Train *poTrain = GetNextObject<Train>();
+            poTrain;
+            poTrain = GetNextObject<Train>(poTrain))
+        {
+            orxOBJECT *pstPrevious = orxOBJECT(orxStructure_Get(poTrain->u64PreviousGUID));
+            if(pstPrevious && (orxObject_GetLifeTime(pstPrevious) > orxFLOAT_0))
+            {
+                orxVECTOR vNewPos, vPos, vSize, vScale;
+                orxVector_Mul(&vSize, orxObject_GetSize(pstPrevious, &vSize), orxObject_GetScale(pstPrevious, &vScale));
+                orxObject_GetPosition(pstPrevious, &vPos);
+                poTrain->GetPosition(vNewPos);
+                if(orxMath_Abs(vPos.fX - vNewPos.fX) > vSize.fX - orx2F(0.5f))
+                {
+                      vNewPos.fX = vPos.fX + vSize.fX - orx2F(0.51f);
+                      poTrain->SetPosition(vNewPos);
+                      orxLOG("Moved %s -> %(%g, %g)", poTrain->GetModelName(), vPos.fX, vPos.fY);
+                }
+            }
+        }
     }
 }
 
@@ -199,8 +246,9 @@ void ld46::Exit()
  */
 void ld46::BindObjects()
 {
-    // Bind the Object class to the Object config section
+    // Bind the classes
     ScrollBindObject<Object>("Object");
+    ScrollBindObject<Train>("Train");
     ScrollBindObject<Player>("Player");
 }
 
@@ -224,8 +272,15 @@ orxSTATUS ld46::Bootstrap() const
  */
 int main(int argc, char **argv)
 {
+  // Should restart?
+  while(sbRestart)
+  {
+    // Clears restart
+    sbRestart = orxFALSE;
+
     // Execute our game
     ld46::GetInstance().Execute(argc, argv);
+  }
 
     // Done!
     return EXIT_SUCCESS;

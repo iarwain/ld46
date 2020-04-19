@@ -2,25 +2,25 @@
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <Filter Include="src">
-      <UniqueIdentifier>{DC6A379C-102B-4B4E-9726-6C9BCB4FD7A0}</UniqueIdentifier>
+      <UniqueIdentifier>{A0CDEC08-6597-1D46-9D4F-39C42CF6C47B}</UniqueIdentifier>
     </Filter>
     <Filter Include="src\imgui">
-      <UniqueIdentifier>{1FD296B6-5348-B440-8B49-01CD909F836E}</UniqueIdentifier>
+      <UniqueIdentifier>{D3E16D9B-28BE-B344-93E4-00B648CEE623}</UniqueIdentifier>
     </Filter>
     <Filter Include="include">
-      <UniqueIdentifier>{01982002-D65D-2840-9E73-7BD1AB1D6810}</UniqueIdentifier>
+      <UniqueIdentifier>{3CBC9EDD-75C1-794E-B10F-9AC0ADED4322}</UniqueIdentifier>
     </Filter>
     <Filter Include="include\imgui">
-      <UniqueIdentifier>{58A5D4E3-7440-EE47-BD2A-78DE614B9A66}</UniqueIdentifier>
+      <UniqueIdentifier>{67BFB2A0-7FBE-6B4D-AF90-501079107536}</UniqueIdentifier>
     </Filter>
     <Filter Include="include\Scroll">
-      <UniqueIdentifier>{703F5AA3-ECE0-8545-AF9F-A72411D1DEA1}</UniqueIdentifier>
+      <UniqueIdentifier>{F63BA8E9-815A-0C49-93A5-EF92B7059BBC}</UniqueIdentifier>
     </Filter>
     <Filter Include="inline">
-      <UniqueIdentifier>{7991780C-6ECA-A648-957C-24347B76BD05}</UniqueIdentifier>
+      <UniqueIdentifier>{74D98FD0-873D-F843-8F45-05BF581789C2}</UniqueIdentifier>
     </Filter>
     <Filter Include="config">
-      <UniqueIdentifier>{F8B2A424-F64F-3149-AE49-4D1432DA17C8}</UniqueIdentifier>
+      <UniqueIdentifier>{1E892AFC-CDA1-D444-B780-F168AFF20EAF}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -36,7 +36,13 @@
     <None Include="..\..\..\include\Scroll\ScrollObject.inl">
       <Filter>inline</Filter>
     </None>
+    <None Include="..\..\..\data\config\commondev.ini">
+      <Filter>config</Filter>
+    </None>
     <None Include="..\..\..\data\config\CreationTemplate.ini">
+      <Filter>config</Filter>
+    </None>
+    <None Include="..\..\..\data\config\dev.ini">
       <Filter>config</Filter>
     </None>
     <None Include="..\..\..\data\config\ld46.ini">
@@ -48,7 +54,31 @@
     <None Include="..\..\..\data\config\ld46p.ini">
       <Filter>config</Filter>
     </None>
+    <None Include="..\..\..\data\config\object.ini">
+      <Filter>config</Filter>
+    </None>
+    <None Include="..\..\..\data\config\player.ini">
+      <Filter>config</Filter>
+    </None>
     <None Include="..\..\..\data\config\SettingsTemplate.ini">
+      <Filter>config</Filter>
+    </None>
+    <None Include="..\..\..\data\config\train.ini">
+      <Filter>config</Filter>
+    </None>
+    <None Include="..\..\..\data\config\train1.ini">
+      <Filter>config</Filter>
+    </None>
+    <None Include="..\..\..\data\config\train2.ini">
+      <Filter>config</Filter>
+    </None>
+    <None Include="..\..\..\data\config\train3.ini">
+      <Filter>config</Filter>
+    </None>
+    <None Include="..\..\..\data\config\train4.ini">
+      <Filter>config</Filter>
+    </None>
+    <None Include="..\..\..\data\config\train5.ini">
       <Filter>config</Filter>
     </None>
   </ItemGroup>
@@ -60,6 +90,9 @@
       <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\include\Player.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\Train.h">
       <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\include\imgui\imconfig.h">
@@ -107,6 +140,9 @@
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\Player.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\Train.cpp">
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\imgui\imgui.cpp">

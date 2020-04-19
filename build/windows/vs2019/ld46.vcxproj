@@ -27,7 +27,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{0CA7A509-7707-D840-BC60-AF9B494689DD}</ProjectGuid>
+    <ProjectGuid>{ACF0C9D0-F5B8-0A41-BEDE-3CFE9FB1201B}</ProjectGuid>
     <RootNamespace>ld46</RootNamespace>
     <Keyword>Win32Proj</Keyword>
   </PropertyGroup>
@@ -367,6 +367,7 @@
     <ClInclude Include="..\..\..\include\ld46.h" />
     <ClInclude Include="..\..\..\include\Object.h" />
     <ClInclude Include="..\..\..\include\Player.h" />
+    <ClInclude Include="..\..\..\include\Train.h" />
     <ClInclude Include="..\..\..\include\imgui\imconfig.h" />
     <ClInclude Include="..\..\..\include\imgui\imgui.h" />
     <ClInclude Include="..\..\..\include\imgui\imgui_internal.h" />
@@ -389,6 +390,8 @@
     </ClCompile>
     <ClCompile Include="..\..\..\src\Player.cpp">
     </ClCompile>
+    <ClCompile Include="..\..\..\src\Train.cpp">
+    </ClCompile>
     <ClCompile Include="..\..\..\src\imgui\imgui.cpp">
     </ClCompile>
     <ClCompile Include="..\..\..\src\imgui\imgui_demo.cpp">
@@ -403,11 +406,21 @@
     <None Include="..\..\..\include\Scroll\ScrollBase.inl" />
     <None Include="..\..\..\include\Scroll\ScrollEd.inl" />
     <None Include="..\..\..\include\Scroll\ScrollObject.inl" />
+    <None Include="..\..\..\data\config\commondev.ini" />
     <None Include="..\..\..\data\config\CreationTemplate.ini" />
+    <None Include="..\..\..\data\config\dev.ini" />
     <None Include="..\..\..\data\config\ld46.ini" />
     <None Include="..\..\..\data\config\ld46d.ini" />
     <None Include="..\..\..\data\config\ld46p.ini" />
+    <None Include="..\..\..\data\config\object.ini" />
+    <None Include="..\..\..\data\config\player.ini" />
     <None Include="..\..\..\data\config\SettingsTemplate.ini" />
+    <None Include="..\..\..\data\config\train.ini" />
+    <None Include="..\..\..\data\config\train1.ini" />
+    <None Include="..\..\..\data\config\train2.ini" />
+    <None Include="..\..\..\data\config\train3.ini" />
+    <None Include="..\..\..\data\config\train4.ini" />
+    <None Include="..\..\..\data\config\train5.ini" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
