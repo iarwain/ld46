@@ -128,10 +128,13 @@ void Player::Update(const orxCLOCK_INFO &_rstInfo)
                 // Dash
                 if(orxInput_HasBeenActivated("Dash"))
                 {
-                    orxVector_Mulf(&vSpeed, &vSpeed, orxConfig_GetFloat("DashSpeed"));
-                    bIsDashing = orxTRUE;
-                    orxClock_AddGlobalTimer(ResetDash, orxConfig_GetFloat("DashDuration"), 1, this);
-                    ld46::GetInstance().CreateObject("DashSound");
+                    if(!orxVector_IsNull(&vSpeed))
+                    {
+                        orxVector_Mulf(&vSpeed, orxVector_Normalize(&vSpeed, &vSpeed), orxConfig_GetFloat("DashSpeed"));
+                        bIsDashing = orxTRUE;
+                        orxClock_AddGlobalTimer(ResetDash, orxConfig_GetFloat("DashDuration"), 1, this);
+                        ld46::GetInstance().CreateObject("DashSound");
+                    }
                 }
                 else
                 {

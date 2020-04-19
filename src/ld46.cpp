@@ -249,9 +249,6 @@ orxSTATUS ld46::Init()
     // Go to menu
     orxInput_SetValue("Menu", orxFLOAT_1);
 
-	// Init music
-	orxObject_CreateFromConfig("Music");
-
     // Done!
     return orxSTATUS_SUCCESS;
 }
@@ -289,7 +286,7 @@ orxSTATUS ld46::Bootstrap() const
     orxArchive_Init();
 
     // Add a config storage to find the initial config file
-    orxResource_AddStorage(orxCONFIG_KZ_RESOURCE_GROUP, "data.zip", orxFALSE);
+    orxResource_AddStorage(orxCONFIG_KZ_RESOURCE_GROUP, "game.dat", orxFALSE);
     orxResource_AddStorage(orxCONFIG_KZ_RESOURCE_GROUP, "../data/config", orxFALSE);
     orxResource_AddStorage(orxCONFIG_KZ_RESOURCE_GROUP, "../data/font", orxFALSE);
 
