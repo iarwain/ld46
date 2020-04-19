@@ -30,25 +30,23 @@ orxSTATUS orxFASTCALL EventHandler(const orxEVENT *_pstEvent)
             {
                 case orxSPAWNER_EVENT_WAVE_START:
                 {
-                    orxBOOL bOpen = orxTRUE;
-
                     orxConfig_PushSection("Runtime");
                     const orxSTRING zTrain = orxConfig_GetString(orxSpawner_GetName(pstSpawner));
 
                     if(zTrain != orxSTRING_EMPTY)
                     {
                         orxConfig_PushSection(zTrain);
-                        bOpen = orxConfig_GetBool("RightDoor");
+                        orxBOOL bOpen = orxConfig_GetBool("RightDoor");
+                        orxConfig_PopSection();
+
+                        const orxSTRING zNewTrain = orxConfig_GetString(bOpen ? "OpenDoor" : "CloseDoor");
+
+                        orxConfig_PushSection(orxSpawner_GetName(pstSpawner));
+                        orxConfig_SetString("Object", zNewTrain);
+                        orxConfig_PopSection();
+
                         orxConfig_PopSection();
                     }
-
-                    const orxSTRING zNewTrain = orxConfig_GetString(bOpen ? "OpenDoor" : "CloseDoor");
-
-                    orxConfig_PushSection(orxSpawner_GetName(pstSpawner));
-                    orxConfig_SetString("Object", zNewTrain);
-                    orxConfig_PopSection();
-
-                    orxConfig_PopSection();
 
                     break;
                 }
