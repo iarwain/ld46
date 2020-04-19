@@ -48,7 +48,9 @@ void Player::OnCreate()
     orxConfig_PopSection();
 
     // Inits score
-
+    orxConfig_PushSection("Runtime");
+    orxConfig_SetU32(GetConfigVar("Score"), 0);
+    orxConfig_PopSection();
 
     // Inits burn rate
     orxClock_AddGlobalTimer(UpdateBurnRate, orxConfig_GetFloat("LampCapacity") / orxConfig_GetListFloat("LampBurnRate", u32BurnRateIndex), 1, this);
@@ -99,7 +101,7 @@ void Player::Update(const orxCLOCK_INFO &_rstInfo)
         orxConfig_PopSection();
 
         // Update light
-        orxVECTOR vScale = {fLampOil, fLampOil, orxFLOAT_0};
+        orxVECTOR vScale = {orxMAX(fLampOil, orxMATH_KF_EPSILON), orxMAX(fLampOil, orxMATH_KF_EPSILON), orxFLOAT_0};
         GetOwnedChild()->SetScale(vScale);
 
         // No more oil?
