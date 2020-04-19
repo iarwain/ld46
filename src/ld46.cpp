@@ -35,11 +35,29 @@ orxSTATUS orxFASTCALL EventHandler(const orxEVENT *_pstEvent)
 
                     if(zTrain != orxSTRING_EMPTY)
                     {
-                        orxConfig_PushSection(zTrain);
-                        orxBOOL bOpen = orxConfig_GetBool("RightDoor");
+                        static orxU32 su32Count = 0;
+                        const orxSTRING zDifficulty;
+
+                        orxConfig_PushSection("Game");
+                        if(!su32Count)
+                        {
+                            zDifficulty = "Hard";
+                            su32Count = orxConfig_GetU32("HardDoorSkip");
+                        }
+                        else
+                        {
+                            zDifficulty = "Easy";
+                            su32Count--;
+                        }
                         orxConfig_PopSection();
 
-                        const orxSTRING zNewTrain = orxConfig_GetString(bOpen ? "OpenDoor" : "CloseDoor");
+                        orxConfig_PushSection(zTrain);
+                        const orxSTRING zType = orxConfig_GetBool("RightDoor") ? "Open" : "Close";
+                        orxConfig_PopSection();
+
+                        orxCHAR acName[32] = {};
+                        orxString_NPrint(acName, sizeof(acName) - 1, "%s%sDoor", zDifficulty, zType);
+                        const orxSTRING zNewTrain = orxConfig_GetString(acName);
 
                         orxConfig_PushSection(orxSpawner_GetName(pstSpawner));
                         orxConfig_SetString("Object", zNewTrain);
@@ -128,11 +146,15 @@ orxSTATUS ld46::Init()
         if(orxConfig_HasValue("LeftDoor"))
         {
             // Stores it
-            const orxSTRING zName = orxConfig_GetCurrentSection();
-            const orxSTRING zSection = orxConfig_GetBool("LeftDoor") ? "OpenDoor" : "CloseDoor";
+            orxCHAR acName[32] = {};
+            const orxSTRING zTrain = orxConfig_GetCurrentSection();
+            const orxSTRING zDifficulty = (orxConfig_HasValue("RightDoor") && !orxConfig_GetBool("RightDoor")) ? "Hard" : "Easy";
+            const orxSTRING zType = orxConfig_GetBool("LeftDoor") ? "Open" : "Close";
+            orxString_NPrint(acName, sizeof(acName) - 1, "%s%sDoor", zDifficulty, zType);
             orxConfig_PushSection("Runtime");
-            orxConfig_AppendListString(zSection, &zName, 1);
+            orxConfig_AppendListString(acName, &zTrain, 1);
             orxConfig_PopSection();
+
         }
 
         // Pops it
