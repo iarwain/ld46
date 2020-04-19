@@ -25,8 +25,10 @@ protected:
 
 private:
     static      void orxFASTCALL ResetDash(const orxCLOCK_INFO* _pstClockInfo, void* _pContext);
+    static      void orxFASTCALL UpdateBurnRate(const orxCLOCK_INFO* _pstClockInfo, void* _pContext);
 
     const       orxSTRING       zLastAnim;
+                orxU32          u32BurnRateIndex;
                 orxBOOL         bIsDashing;
                 orxBOOL         bIsDead;
 };

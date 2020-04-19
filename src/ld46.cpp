@@ -62,9 +62,9 @@ orxSTATUS orxFASTCALL EventHandler(const orxEVENT *_pstEvent)
                         orxConfig_PushSection(orxSpawner_GetName(pstSpawner));
                         orxConfig_SetString("Object", zNewTrain);
                         orxConfig_PopSection();
-
-                        orxConfig_PopSection();
                     }
+
+                    orxConfig_PopSection();
 
                     break;
                 }
@@ -116,9 +116,6 @@ orxSTATUS ld46::Init()
 
     // Initialize random seeds
     orxMath_InitRandom(orxF2U(orxSystem_GetSystemTime() * 1000.0f));
-
-    // Initialize Dear ImGui
-    orxImGui_Init();
 
     // Pushes game section
     orxConfig_PushSection("Game");
@@ -183,9 +180,6 @@ orxSTATUS ld46::Run()
  */
 void ld46::Exit()
 {
-    // Exits from Dear ImGui
-    orxImGui_Exit();
-
     // Let Orx clean all our mess automatically. :)
 }
 

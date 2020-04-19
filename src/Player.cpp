@@ -12,6 +12,18 @@ void orxFASTCALL Player::ResetDash(const orxCLOCK_INFO *_pstClockInfo, void *_pC
     poPlayer->SetSpeed(orxVECTOR_0);
 }
 
+void orxFASTCALL Player::UpdateBurnRate(const orxCLOCK_INFO *_pstClockInfo, void *_pContext)
+{
+    Player *poPlayer = (Player *)_pContext;
+    if(!poPlayer->bIsDead)
+    {
+        poPlayer->PushConfigSection();
+        poPlayer->u32BurnRateIndex = orxMIN((orxU32)orxConfig_GetListCount("LampBurnRate"), poPlayer->u32BurnRateIndex + 1);
+        orxClock_AddGlobalTimer(UpdateBurnRate, orxConfig_GetFloat("LampCapacity") / orxConfig_GetListFloat("LampBurnRate", poPlayer->u32BurnRateIndex), 1, poPlayer);
+        poPlayer->PopConfigSection();
+    }
+}
+
 void Player::OnCreate()
 {
     Object::OnCreate();
@@ -27,6 +39,9 @@ void Player::OnCreate()
     orxConfig_PushSection("Runtime");
     orxConfig_SetFloat(acName, fLampCapacity);
     orxConfig_PopSection();
+
+    // Inits burn rate
+    orxClock_AddGlobalTimer(UpdateBurnRate, orxConfig_GetFloat("LampCapacity") / orxConfig_GetListFloat("LampBurnRate", u32BurnRateIndex), 1, this);
 }
 
 void Player::OnDelete()
@@ -62,7 +77,7 @@ void Player::Update(const orxCLOCK_INFO &_rstInfo)
         Object::Update(_rstInfo);
 
         // Update lamp
-        orxFLOAT fLampBurnRate = orxConfig_GetFloat("LampBurnRate");
+        orxFLOAT fLampBurnRate = orxConfig_GetListFloat("LampBurnRate", u32BurnRateIndex);
         orxCHAR acName[32] = {};
         orxString_NPrint(acName, sizeof(acName) - 1, "%sOil", GetModelName());
         orxConfig_PushSection("Runtime");
@@ -78,6 +93,7 @@ void Player::Update(const orxCLOCK_INFO &_rstInfo)
             SetSpeed(orxVECTOR_0);
             SetAnim("Death");
             bIsDead = orxTRUE;
+            orxClock_RemoveGlobalTimer(orxNULL, orx2F(-1.0f), this);
         }
         else
         {
