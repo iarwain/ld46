@@ -18,6 +18,67 @@
 #include "orxArchive.cpp"
 #undef orxARCHIVE_HEADER_ONLY
 
+orxSTATUS orxFASTCALL EventHandler(const orxEVENT *_pstEvent)
+{
+    switch(_pstEvent->eType)
+    {
+        case orxEVENT_TYPE_SPAWNER:
+        {
+            orxSPAWNER *pstSpawner = orxSPAWNER(_pstEvent->hSender);
+
+            switch(_pstEvent->eID)
+            {
+                case orxSPAWNER_EVENT_WAVE_START:
+                {
+                    orxBOOL bOpen = orxTRUE;
+
+                    orxConfig_PushSection("Runtime");
+                    const orxSTRING zTrain = orxConfig_GetString(orxSpawner_GetName(pstSpawner));
+
+                    if(zTrain != orxSTRING_EMPTY)
+                    {
+                        orxConfig_PushSection(zTrain);
+                        bOpen = orxConfig_GetBool("RightDoor");
+                        orxConfig_PopSection();
+                    }
+
+                    const orxSTRING zNewTrain = orxConfig_GetString(bOpen ? "OpenDoor" : "CloseDoor");
+
+                    orxConfig_PushSection(orxSpawner_GetName(pstSpawner));
+                    orxConfig_SetString("Object", zNewTrain);
+                    orxConfig_PopSection();
+
+                    orxConfig_PopSection();
+
+                    break;
+                }
+                case orxSPAWNER_EVENT_SPAWN:
+                {
+                    orxOBJECT *pstObject = orxOBJECT(_pstEvent->hRecipient);
+
+                    if(orxString_SearchString(orxObject_GetName(pstObject), "Train"))
+                    {
+                       orxSPAWNER *pstSpawner = orxSPAWNER(orxObject_GetOwner(pstObject));
+
+                       if(pstSpawner)
+                       {
+                           orxConfig_PushSection("Runtime");
+                           orxConfig_SetString(orxSpawner_GetName(pstSpawner), orxObject_GetName(pstObject));
+                           orxConfig_PopSection();
+                       }
+                    }
+
+                    break;
+                }
+            }
+
+            break;
+        }
+    }
+
+    return orxSTATUS_SUCCESS;
+}
+
 /** Update function, it has been registered to be called every tick of the core clock
  */
 void ld46::Update(const orxCLOCK_INFO &_rstInfo)
@@ -65,9 +126,23 @@ orxSTATUS ld46::Init()
             orxTexture_CreateFromFile(orxConfig_GetString("Texture"), orxFALSE);
         }
 
+        // Has left door?
+        if(orxConfig_HasValue("LeftDoor"))
+        {
+            // Stores it
+            const orxSTRING zName = orxConfig_GetCurrentSection();
+            const orxSTRING zSection = orxConfig_GetBool("LeftDoor") ? "OpenDoor" : "CloseDoor";
+            orxConfig_PushSection("Runtime");
+            orxConfig_AppendListString(zSection, &zName, 1);
+            orxConfig_PopSection();
+        }
+
         // Pops it
         orxConfig_PopSection();
     }
+
+    // Register event handler
+    orxEvent_AddHandler(orxEVENT_TYPE_SPAWNER, &EventHandler);
 
     // Create the menu
     CreateObject("Menu");
