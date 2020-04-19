@@ -220,6 +220,9 @@ orxSTATUS ld46::Init()
     // Go to menu
     orxInput_SetValue("Menu", orxFLOAT_1);
 
+	// Init music
+	orxObject_CreateFromConfig("Music");
+
     // Done!
     return orxSTATUS_SUCCESS;
 }
