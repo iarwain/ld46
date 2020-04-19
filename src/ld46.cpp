@@ -122,19 +122,17 @@ void ld46::Update(const orxCLOCK_INFO &_rstInfo)
         // Send close event
         orxEvent_SendShort(orxEVENT_TYPE_SYSTEM, orxSYSTEM_EVENT_CLOSE);
     }
-    // Reset?
-    else if(orxInput_HasBeenActivated("Reset"))
+    // Menu or reset?
+    else if(orxInput_HasBeenActivated("Menu") || orxInput_HasBeenActivated("Reset"))
     {
         PauseGame(orxFALSE);
-        orxConfig_PushSection("Runtime");
         for(ScrollObject *poObject = GetNextObject();
             poObject;
             poObject = GetNextObject())
         {
             DeleteObject(poObject);
         }
-        CreateObject("Menu");
-        orxConfig_PopSection();
+        CreateObject(orxInput_HasBeenActivated("Menu") ? "Menu" : "Scene");
     }
     // Pause?
     else if(orxInput_HasBeenActivated("Pause"))
@@ -159,7 +157,6 @@ void ld46::Update(const orxCLOCK_INFO &_rstInfo)
                 {
                       vNewPos.fX = vPos.fX + vSize.fX - orx2F(0.51f);
                       poTrain->SetPosition(vNewPos);
-                      orxLOG("Moved %s -> %(%g, %g)", poTrain->GetModelName(), vPos.fX, vPos.fY);
                 }
             }
         }
@@ -220,8 +217,8 @@ orxSTATUS ld46::Init()
     // Register event handler
     orxEvent_AddHandler(orxEVENT_TYPE_SPAWNER, &EventHandler);
 
-    // Create the menu
-    CreateObject("Menu");
+    // Go to menu
+    orxInput_SetValue("Menu", orxFLOAT_1);
 
     // Done!
     return orxSTATUS_SUCCESS;
