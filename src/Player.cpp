@@ -112,7 +112,6 @@ void Player::Update(const orxCLOCK_INFO &_rstInfo)
             SetAnim("Death");
             bIsDead = orxTRUE;
             orxClock_RemoveGlobalTimer(orxNULL, orx2F(-1.0f), this);
-            ld46::GetInstance().CreateObject("GameOver");
         }
         else
         {
@@ -153,7 +152,7 @@ void Player::Update(const orxCLOCK_INFO &_rstInfo)
                 }
 
                 // Update Anim
-                SetAnim((orxVector_GetSquareSize(&vSpeed) > orxMATH_KF_EPSILON) ? zLastAnim : orxNULL);
+                SetAnim((orxVector_GetSize(&vSpeed) > orxConfig_GetFloat("MoveThreshold")) ? zLastAnim : orxNULL);
             }
 
             // Deselect input set
