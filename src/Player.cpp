@@ -52,6 +52,8 @@ void Player::Update(const orxCLOCK_INFO &_rstInfo)
     if(fLampOil == orxFLOAT_0)
     {
         //! Game Over
+        SetSpeed(orxVECTOR_0);
+        SetAnim("Death");
     }
     else
     {
@@ -62,12 +64,12 @@ void Player::Update(const orxCLOCK_INFO &_rstInfo)
         const orxSTRING zSet = orxInput_GetCurrentSet();
         orxInput_SelectSet(orxConfig_GetString("Input"));
 
+        // Move
+        orxVECTOR vSpeed = {orxInput_GetValue("MoveRight") - orxInput_GetValue("MoveLeft"), orxInput_GetValue("MoveDown") - orxInput_GetValue("MoveUp"), orxFLOAT_0};
+
         // Dash
         if(!bIsDashing)
         {
-            // Move
-            orxVECTOR vSpeed = {orxInput_GetValue("MoveRight") - orxInput_GetValue("MoveLeft"), orxInput_GetValue("MoveDown") - orxInput_GetValue("MoveUp"), orxFLOAT_0};
-
             // Dash
             if(orxInput_HasBeenActivated("Dash"))
             {
@@ -82,6 +84,25 @@ void Player::Update(const orxCLOCK_INFO &_rstInfo)
 
             // Set speed
             SetSpeed(vSpeed);
+        }
+
+        GetSpeed(vSpeed);
+        if(vSpeed.fX < orxFLOAT_0)
+        {
+            zLastAnim = "RunLeft";
+        }
+        else if(vSpeed.fX > orxFLOAT_0)
+        {
+            zLastAnim = "RunRight";
+        }
+
+        if(orxVector_GetSquareSize(&vSpeed) > orxMATH_KF_EPSILON)
+        {
+            SetAnim(zLastAnim);
+        }
+        else
+        {
+            SetAnim(orxNULL);
         }
 
         orxInput_SelectSet(zSet);

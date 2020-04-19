@@ -24,8 +24,10 @@ protected:
 
 
 private:
-                orxBOOL         bIsDashing;
     static      void orxFASTCALL ResetDash(const orxCLOCK_INFO* _pstClockInfo, void* _pContext);
+
+                orxBOOL         bIsDashing;
+    const       orxSTRING       zLastAnim;
 };
 
 #endif // __PLAYER_H__
