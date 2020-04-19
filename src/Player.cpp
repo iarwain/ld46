@@ -160,6 +160,14 @@ orxBOOL Player::OnCollide(ScrollObject *_poCollider, const orxSTRING _zPartName,
             orxConfig_PopSection();
             _poCollider->AddConditionalTrack("PickUp");
         }
+        else if(orxString_SearchString(_zColliderPartName, "Death"))
+        {
+            orxCHAR acName[32] = {};
+            orxString_NPrint(acName, sizeof(acName) - 1, "%sOil", GetModelName());
+            orxConfig_PushSection("Runtime");
+            orxConfig_SetFloat(acName, orxFLOAT_0);
+            orxConfig_PopSection();
+        }
         else
         {
             if (bIsDashing)
