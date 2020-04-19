@@ -100,10 +100,22 @@ orxSTATUS orxFASTCALL EventHandler(const orxEVENT *_pstEvent)
 void ld46::Update(const orxCLOCK_INFO &_rstInfo)
 {
     // Should quit?
-    if(orxInput_IsActive("Quit"))
+    if(orxInput_HasBeenActivated("Quit"))
     {
         // Send close event
         orxEvent_SendShort(orxEVENT_TYPE_SYSTEM, orxSYSTEM_EVENT_CLOSE);
+    }
+    else if(orxInput_HasBeenActivated("Reset"))
+    {
+        PauseGame(orxFALSE);
+        orxConfig_PushSection("Runtime");
+        DeleteObject(GetObject(orxConfig_GetU64("Menu")));
+        CreateObject("Menu");
+        orxConfig_PopSection();
+    }
+    else if(orxInput_HasBeenActivated("Pause"))
+    {
+        PauseGame(!IsGamePaused());
     }
 }
 

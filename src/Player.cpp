@@ -5,6 +5,15 @@
 
 #include "Player.h"
 
+const orxSTRING Player::GetConfigVar(const orxSTRING _zVar) const
+{
+    static orxCHAR sacName[32] = {};
+
+    orxString_NPrint(sacName, sizeof(sacName) - 1, "%s%s", GetModelName(), _zVar);
+
+    return sacName;
+}
+
 void orxFASTCALL Player::ResetDash(const orxCLOCK_INFO *_pstClockInfo, void *_pContext)
 {
     Player *poPlayer = (Player *)_pContext;
@@ -34,11 +43,12 @@ void Player::OnCreate()
 
     // Inits lamp
     orxFLOAT fLampCapacity = orxConfig_GetFloat("LampCapacity");
-    orxCHAR acName[32] = {};
-    orxString_NPrint(acName, sizeof(acName) - 1, "%sOil", GetModelName());
     orxConfig_PushSection("Runtime");
-    orxConfig_SetFloat(acName, fLampCapacity);
+    orxConfig_SetFloat(GetConfigVar("Oil"), fLampCapacity);
     orxConfig_PopSection();
+
+    // Inits score
+
 
     // Inits burn rate
     orxClock_AddGlobalTimer(UpdateBurnRate, orxConfig_GetFloat("LampCapacity") / orxConfig_GetListFloat("LampBurnRate", u32BurnRateIndex), 1, this);
@@ -47,6 +57,9 @@ void Player::OnCreate()
 void Player::OnDelete()
 {
     Object::OnDelete();
+
+    // Removes all timers
+    orxClock_RemoveGlobalTimer(orxNULL, orx2F(-1.0f), this);
 }
 
 void Player::Update(const orxCLOCK_INFO &_rstInfo)
@@ -78,29 +91,29 @@ void Player::Update(const orxCLOCK_INFO &_rstInfo)
 
         // Update lamp
         orxFLOAT fLampBurnRate = orxConfig_GetListFloat("LampBurnRate", u32BurnRateIndex);
-        orxCHAR acName[32] = {};
-        orxString_NPrint(acName, sizeof(acName) - 1, "%sOil", GetModelName());
         orxConfig_PushSection("Runtime");
-        orxFLOAT fLampOil = orxConfig_GetFloat(acName);
+        const orxSTRING zName = GetConfigVar("Oil");
+        orxFLOAT fLampOil = orxConfig_GetFloat(zName);
         fLampOil = orxMAX(fLampOil - fLampBurnRate * _rstInfo.fDT, orxFLOAT_0);
-        orxConfig_SetFloat(acName, fLampOil);
+        orxConfig_SetFloat(zName, fLampOil);
         orxConfig_PopSection();
+
+        // Update light
+        orxVECTOR vScale = {fLampOil, fLampOil, orxFLOAT_0};
+        GetOwnedChild()->SetScale(vScale);
 
         // No more oil?
         if(fLampOil == orxFLOAT_0)
         {
-            //! Game Over
+            // Game Over
             SetSpeed(orxVECTOR_0);
             SetAnim("Death");
             bIsDead = orxTRUE;
             orxClock_RemoveGlobalTimer(orxNULL, orx2F(-1.0f), this);
+            ld46::GetInstance().CreateObject("GameOver");
         }
         else
         {
-            // Update light
-            orxVECTOR vScale = {fLampOil, fLampOil, orxFLOAT_0};
-            GetOwnedChild()->SetScale(vScale);
-
             // Select input set
             const orxSTRING zSet = orxInput_GetCurrentSet();
             orxInput_SelectSet(orxConfig_GetString("Input"));
@@ -117,7 +130,7 @@ void Player::Update(const orxCLOCK_INFO &_rstInfo)
                     orxVector_Mulf(&vSpeed, &vSpeed, orxConfig_GetFloat("DashSpeed"));
                     bIsDashing = orxTRUE;
                     orxClock_AddGlobalTimer(ResetDash, orxConfig_GetFloat("DashDuration"), 1, this);
-                    orxObject_CreateFromConfig("DashSound");
+                    ld46::GetInstance().CreateObject("DashSound");
                 }
                 else
                 {
@@ -162,10 +175,8 @@ orxBOOL Player::OnCollide(ScrollObject *_poCollider, const orxSTRING _zPartName,
         }
         else if(orxString_SearchString(_zColliderPartName, "Death"))
         {
-            orxCHAR acName[32] = {};
-            orxString_NPrint(acName, sizeof(acName) - 1, "%sOil", GetModelName());
             orxConfig_PushSection("Runtime");
-            orxConfig_SetFloat(acName, orxFLOAT_0);
+            orxConfig_SetFloat(GetConfigVar("Oil"), orxFLOAT_0);
             orxConfig_PopSection();
         }
         else
@@ -175,7 +186,7 @@ orxBOOL Player::OnCollide(ScrollObject *_poCollider, const orxSTRING _zPartName,
                 orxConfig_PushSection(_zColliderPartName);
                 if (!orxConfig_GetBool("IsDoor"))
                 {
-                    orxObject_CreateFromConfig("HitSound");
+                    ld46::GetInstance().CreateObject("HitSound");
                 }
                 orxConfig_PopSection();
             }
