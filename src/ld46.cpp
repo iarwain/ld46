@@ -134,32 +134,61 @@ void ld46::Update(const orxCLOCK_INFO &_rstInfo)
         }
         CreateObject(orxInput_HasBeenActivated("Menu") ? "Menu" : "Scene");
     }
-    // Pause?
-    else if(orxInput_HasBeenActivated("Pause"))
-    {
-        PauseGame(!IsGamePaused());
-    }
     else
     {
-        // Train fixup
-        for(Train *poTrain = GetNextObject<Train>();
-            poTrain;
-            poTrain = GetNextObject<Train>(poTrain))
+        orxConfig_PushSection("Runtime");
+
+        if(!orxOBJECT(orxStructure_Get(orxConfig_GetU64("GameOver"))))
         {
-            orxOBJECT *pstPrevious = orxOBJECT(orxStructure_Get(poTrain->u64PreviousGUID));
-            if(pstPrevious && (orxObject_GetLifeTime(pstPrevious) > orxFLOAT_0))
+            // Pause?
+            if(orxInput_HasBeenActivated("Pause"))
             {
-                orxVECTOR vNewPos, vPos, vSize, vScale;
-                orxVector_Mul(&vSize, orxObject_GetSize(pstPrevious, &vSize), orxObject_GetScale(pstPrevious, &vScale));
-                orxObject_GetPosition(pstPrevious, &vPos);
-                poTrain->GetPosition(vNewPos);
-                if(orxMath_Abs(vPos.fX - vNewPos.fX) > vSize.fX - orx2F(0.5f))
+                PauseGame(!IsGamePaused());
+            }
+
+            // Train fixup
+            for(Train *poTrain = GetNextObject<Train>();
+                poTrain;
+                poTrain = GetNextObject<Train>(poTrain))
+            {
+                orxOBJECT *pstPrevious = orxOBJECT(orxStructure_Get(poTrain->u64PreviousGUID));
+                if(pstPrevious && (orxObject_GetLifeTime(pstPrevious) > orxFLOAT_0))
                 {
-                      vNewPos.fX = vPos.fX + vSize.fX - orx2F(0.51f);
-                      poTrain->SetPosition(vNewPos);
+                    orxVECTOR vNewPos, vPos, vSize, vScale;
+                    orxVector_Mul(&vSize, orxObject_GetSize(pstPrevious, &vSize), orxObject_GetScale(pstPrevious, &vScale));
+                    orxObject_GetPosition(pstPrevious, &vPos);
+                    poTrain->GetPosition(vNewPos);
+                    if(orxMath_Abs(vPos.fX - vNewPos.fX) > vSize.fX - orx2F(0.5f))
+                    {
+                          vNewPos.fX = vPos.fX + vSize.fX - orx2F(0.51f);
+                          poTrain->SetPosition(vNewPos);
+                    }
                 }
             }
+
+            // Game over?
+            orxU32 u32Alive = 0, u32Dead = 0;
+            for(Player *poPlayer = ld46::GetInstance().GetNextObject<Player>();
+                poPlayer;
+                poPlayer = ld46::GetInstance().GetNextObject<Player>(poPlayer))
+            {
+                if(!poPlayer->IsDead())
+                {
+                    u32Alive++;
+                }
+                else
+                {
+                    u32Dead++;
+                }
+            }
+            if((u32Dead > 0) && (u32Alive <= 1))
+            {
+                ld46::GetInstance().CreateObject("GameOver");
+                PauseGame(orxTRUE);
+            }
         }
+
+        orxConfig_PopSection();
     }
 }
 

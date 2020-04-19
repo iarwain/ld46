@@ -14,6 +14,8 @@ class Player : public Object
 {
 public:
 
+                orxBOOL         IsDead() const  {return bIsDead;}
+
 
 protected:
 
