@@ -47,11 +47,6 @@ void Player::OnCreate()
     orxConfig_SetFloat(GetConfigVar("Oil"), fLampCapacity);
     orxConfig_PopSection();
 
-    // Inits score
-    orxConfig_PushSection("Runtime");
-    orxConfig_SetU32(GetConfigVar("Score"), 0);
-    orxConfig_PopSection();
-
     // Inits burn rate
     orxClock_AddGlobalTimer(UpdateBurnRate, orxConfig_GetFloat("LampCapacity") / orxConfig_GetListFloat("LampBurnRate", u32BurnRateIndex), 1, this);
 }

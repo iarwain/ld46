@@ -127,8 +127,32 @@ void ld46::Update(const orxCLOCK_INFO &_rstInfo)
         // Send close event
         orxEvent_SendShort(orxEVENT_TYPE_SYSTEM, orxSYSTEM_EVENT_CLOSE);
     }
-    // Menu or reset?
-    else if(orxInput_HasBeenActivated("Menu") || orxInput_HasBeenActivated("Reset"))
+    // Menu?
+    else if(orxInput_HasBeenActivated("Menu"))
+    {
+        orxConfig_PushSection("Runtime");
+        if(!orxOBJECT(orxStructure_Get(orxConfig_GetU64("Menu")))
+        && !orxOBJECT(orxStructure_Get(orxConfig_GetU64("Tutorial"))))
+        {
+            PauseGame(orxFALSE);
+            for(ScrollObject *poObject = GetNextObject();
+                poObject;
+                poObject = GetNextObject())
+            {
+                DeleteObject(poObject);
+            }
+
+            orxConfig_PushSection("Runtime");
+            orxConfig_SetU32("Player1Score", 0);
+            orxConfig_SetU32("Player2Score", 0);
+            orxConfig_SetU32("Player3Score", 0);
+            orxConfig_SetU32("Player4Score", 0);
+            orxConfig_PopSection();
+            CreateObject("Menu");
+        }
+        orxConfig_PopSection();
+    }
+    else if(orxInput_HasBeenActivated("Reset"))
     {
         PauseGame(orxFALSE);
         for(ScrollObject *poObject = GetNextObject();
@@ -137,7 +161,13 @@ void ld46::Update(const orxCLOCK_INFO &_rstInfo)
         {
             DeleteObject(poObject);
         }
-        CreateObject(orxInput_HasBeenActivated("Menu") ? "Menu" : "Scene");
+        orxConfig_PushSection("Runtime");
+        if(!orxString_Compare(orxConfig_GetString("Players"), "1P"))
+        {
+            orxConfig_SetU32("Player1Score", 0);
+        }
+        orxConfig_PopSection();
+        CreateObject("Scene");
     }
     else
     {
@@ -192,6 +222,7 @@ void ld46::Update(const orxCLOCK_INFO &_rstInfo)
             orxU32 u32HighScore = orxConfig_GetU32("HighScore");
             orxConfig_PopSection();
             orxU32 u32Alive = 0, u32Dead = 0;
+            Player *poAlive = orxNULL;
             for(Player *poPlayer = ld46::GetInstance().GetNextObject<Player>();
                 poPlayer;
                 poPlayer = ld46::GetInstance().GetNextObject<Player>(poPlayer))
@@ -199,6 +230,7 @@ void ld46::Update(const orxCLOCK_INFO &_rstInfo)
                 if(!poPlayer->IsDead())
                 {
                     u32Alive++;
+                    poAlive = poPlayer;
                 }
                 else
                 {
@@ -213,13 +245,20 @@ void ld46::Update(const orxCLOCK_INFO &_rstInfo)
                     u32HighScore = u32Score;
                 }
             }
-            orxConfig_PushSection("Save");
-            orxConfig_SetU32("HighScore", u32HighScore);
-            orxConfig_PopSection();
+            if(u32Alive + u32Dead == 1)
+            {
+                orxConfig_PushSection("Save");
+                orxConfig_SetU32("HighScore", u32HighScore);
+                orxConfig_PopSection();
+            }
 
             if((u32Dead > 0) && (u32Alive <= 1))
             {
                 ld46::GetInstance().CreateObject("GameOver");
+                if(poAlive)
+                {
+                    orxConfig_SetU64("Winner", poAlive->GetGUID());
+                }
             }
         }
         else if(orxInput_HasBeenActivated("Pause"))
