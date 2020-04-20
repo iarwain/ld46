@@ -35,6 +35,7 @@ private:
                 orxU32          u32BurnRateIndex;
                 orxBOOL         bIsDashing;
                 orxBOOL         bIsDead;
+                orxBOOL         bIsDashQueued;
 };
 
 #endif // __PLAYER_H__
