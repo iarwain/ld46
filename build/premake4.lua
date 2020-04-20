@@ -238,10 +238,10 @@ solution "ld46"
 
 
 --
--- Project: ld46
+-- Project: RailroadLantern
 --
 
-project "ld46"
+project "RailroadLantern"
 
     files
     {

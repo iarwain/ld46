@@ -27,8 +27,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{ACF0C9D0-F5B8-0A41-BEDE-3CFE9FB1201B}</ProjectGuid>
-    <RootNamespace>ld46</RootNamespace>
+    <ProjectGuid>{74DBAF6C-7268-9E44-A670-B1D42F8A7405}</ProjectGuid>
+    <RootNamespace>RailroadLantern</RootNamespace>
     <Keyword>Win32Proj</Keyword>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -93,7 +93,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <OutDir>..\..\..\bin\</OutDir>
     <IntDir>obj\x64\Debug\</IntDir>
-    <TargetName>ld46d</TargetName>
+    <TargetName>RailroadLanternd</TargetName>
     <TargetExt>.exe</TargetExt>
     <LinkIncremental>false</LinkIncremental>
     <GenerateManifest>false</GenerateManifest>
@@ -101,7 +101,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <OutDir>..\..\..\bin\</OutDir>
     <IntDir>obj\x32\Debug\</IntDir>
-    <TargetName>ld46d</TargetName>
+    <TargetName>RailroadLanternd</TargetName>
     <TargetExt>.exe</TargetExt>
     <LinkIncremental>false</LinkIncremental>
     <GenerateManifest>false</GenerateManifest>
@@ -109,7 +109,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Profile|x64'">
     <OutDir>..\..\..\bin\</OutDir>
     <IntDir>obj\x64\Profile\</IntDir>
-    <TargetName>ld46p</TargetName>
+    <TargetName>RailroadLanternp</TargetName>
     <TargetExt>.exe</TargetExt>
     <LinkIncremental>false</LinkIncremental>
     <GenerateManifest>false</GenerateManifest>
@@ -117,7 +117,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Profile|Win32'">
     <OutDir>..\..\..\bin\</OutDir>
     <IntDir>obj\x32\Profile\</IntDir>
-    <TargetName>ld46p</TargetName>
+    <TargetName>RailroadLanternp</TargetName>
     <TargetExt>.exe</TargetExt>
     <LinkIncremental>false</LinkIncremental>
     <GenerateManifest>false</GenerateManifest>
@@ -125,7 +125,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <OutDir>..\..\..\bin\</OutDir>
     <IntDir>obj\x64\Release\</IntDir>
-    <TargetName>ld46</TargetName>
+    <TargetName>RailroadLantern</TargetName>
     <TargetExt>.exe</TargetExt>
     <LinkIncremental>false</LinkIncremental>
     <GenerateManifest>false</GenerateManifest>
@@ -133,7 +133,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <OutDir>..\..\..\bin\</OutDir>
     <IntDir>obj\x32\Release\</IntDir>
-    <TargetName>ld46</TargetName>
+    <TargetName>RailroadLantern</TargetName>
     <TargetExt>.exe</TargetExt>
     <LinkIncremental>false</LinkIncremental>
     <GenerateManifest>false</GenerateManifest>
@@ -164,7 +164,7 @@
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>orxd.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>$(OutDir)ld46d.exe</OutputFile>
+      <OutputFile>$(OutDir)RailroadLanternd.exe</OutputFile>
       <AdditionalLibraryDirectories>$(ORX)\lib\dynamic;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <EntryPointSymbol>mainCRTStartup</EntryPointSymbol>
       <TargetMachine>MachineX64</TargetMachine>
@@ -200,7 +200,7 @@
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>orxd.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>$(OutDir)ld46d.exe</OutputFile>
+      <OutputFile>$(OutDir)RailroadLanternd.exe</OutputFile>
       <AdditionalLibraryDirectories>$(ORX)\lib\dynamic;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <EntryPointSymbol>mainCRTStartup</EntryPointSymbol>
       <TargetMachine>MachineX86</TargetMachine>
@@ -238,7 +238,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalDependencies>orxp.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>$(OutDir)ld46p.exe</OutputFile>
+      <OutputFile>$(OutDir)RailroadLanternp.exe</OutputFile>
       <AdditionalLibraryDirectories>$(ORX)\lib\dynamic;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <EntryPointSymbol>mainCRTStartup</EntryPointSymbol>
       <TargetMachine>MachineX64</TargetMachine>
@@ -277,7 +277,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalDependencies>orxp.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>$(OutDir)ld46p.exe</OutputFile>
+      <OutputFile>$(OutDir)RailroadLanternp.exe</OutputFile>
       <AdditionalLibraryDirectories>$(ORX)\lib\dynamic;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <EntryPointSymbol>mainCRTStartup</EntryPointSymbol>
       <TargetMachine>MachineX86</TargetMachine>
@@ -315,7 +315,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalDependencies>orx.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>$(OutDir)ld46.exe</OutputFile>
+      <OutputFile>$(OutDir)RailroadLantern.exe</OutputFile>
       <AdditionalLibraryDirectories>$(ORX)\lib\dynamic;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <EntryPointSymbol>mainCRTStartup</EntryPointSymbol>
       <TargetMachine>MachineX64</TargetMachine>
@@ -354,7 +354,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalDependencies>orx.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>$(OutDir)ld46.exe</OutputFile>
+      <OutputFile>$(OutDir)RailroadLantern.exe</OutputFile>
       <AdditionalLibraryDirectories>$(ORX)\lib\dynamic;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <EntryPointSymbol>mainCRTStartup</EntryPointSymbol>
       <TargetMachine>MachineX86</TargetMachine>
