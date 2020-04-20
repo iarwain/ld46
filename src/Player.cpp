@@ -126,7 +126,7 @@ void Player::Update(const orxCLOCK_INFO &_rstInfo)
                 orxVECTOR vSpeed = {orxInput_GetValue("MoveRight") - orxInput_GetValue("MoveLeft"), orxInput_GetValue("MoveDown") - orxInput_GetValue("MoveUp"), orxFLOAT_0};
 
                 // Dash
-                if(orxInput_HasBeenActivated("Dash"))
+                if(bIsDashQueued || orxInput_HasBeenActivated("Dash"))
                 {
                     if(!orxVector_IsNull(&vSpeed))
                     {
@@ -135,6 +135,8 @@ void Player::Update(const orxCLOCK_INFO &_rstInfo)
                         orxClock_AddGlobalTimer(ResetDash, orxConfig_GetFloat("DashDuration"), 1, this);
                         ld46::GetInstance().CreateObject("DashSound");
                     }
+
+                    bIsDashQueued = orxFALSE;
                 }
                 else
                 {
@@ -156,6 +158,15 @@ void Player::Update(const orxCLOCK_INFO &_rstInfo)
 
                 // Update Anim
                 SetAnim((orxVector_GetSize(&vSpeed) > orxConfig_GetFloat("MoveThreshold")) ? zLastAnim : orxNULL);
+            }
+            else
+            {
+                // Dash?
+                if(orxInput_HasBeenActivated("Dash"))
+                {
+                    // Queue dash
+                    bIsDashQueued = orxTRUE;
+                }
             }
 
             // Deselect input set
