@@ -21,6 +21,11 @@
 
 static orxBOOL sbRestart = orxTRUE;
 
+orxBOOL orxFASTCALL SaveCallback(const orxSTRING _zSectionName, const orxSTRING _zKeyName, const orxSTRING _zFileName, orxBOOL _bUseEncryption)
+{
+    return (!orxString_Compare(_zSectionName, "Save")) ? orxTRUE : orxFALSE;
+}
+
 orxSTATUS orxFASTCALL EventHandler(const orxEVENT *_pstEvent)
 {
     switch(_pstEvent->eType)
@@ -181,7 +186,10 @@ void ld46::Update(const orxCLOCK_INFO &_rstInfo)
                 }
             }
 
-            // Game over?
+            // Game over / Save?
+            orxConfig_PushSection("Save");
+            orxU32 u32HighScore = orxConfig_GetU32("HighScore");
+            orxConfig_PopSection();
             orxU32 u32Alive = 0, u32Dead = 0;
             for(Player *poPlayer = ld46::GetInstance().GetNextObject<Player>();
                 poPlayer;
@@ -195,7 +203,19 @@ void ld46::Update(const orxCLOCK_INFO &_rstInfo)
                 {
                     u32Dead++;
                 }
+
+                orxCHAR acName[32] = {};
+                orxString_NPrint(acName, sizeof(acName) - 1, "%sScore", poPlayer->GetModelName());
+                orxU32 u32Score = orxConfig_GetU32(acName);
+                if(u32Score > u32HighScore)
+                {
+                    u32HighScore = u32Score;
+                }
             }
+            orxConfig_PushSection("Save");
+            orxConfig_SetU32("HighScore", u32HighScore);
+            orxConfig_PopSection();
+
             if((u32Dead > 0) && (u32Alive <= 1))
             {
                 ld46::GetInstance().CreateObject("GameOver");
@@ -283,7 +303,8 @@ orxSTATUS ld46::Run()
  */
 void ld46::Exit()
 {
-    // Let Orx clean all our mess automatically. :)
+    // Save highscores
+    orxConfig_Save("score.dat", orxTRUE, &SaveCallback);
 }
 
 /** BindObjects function, ScrollObject-derived classes are bound to config sections here
