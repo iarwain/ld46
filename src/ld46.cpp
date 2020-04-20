@@ -141,9 +141,24 @@ void ld46::Update(const orxCLOCK_INFO &_rstInfo)
         if(!orxOBJECT(orxStructure_Get(orxConfig_GetU64("GameOver"))))
         {
             // Pause?
-            if(orxInput_HasBeenActivated("Pause"))
+            if(!orxOBJECT(orxStructure_Get(orxConfig_GetU64("Menu"))))
             {
-                PauseGame(!IsGamePaused());
+                if(orxInput_HasBeenActivated("Pause"))
+                {
+                    PauseGame(!IsGamePaused());
+                    if(IsGamePaused())
+                    {
+                        CreateObject("Pause");
+                    }
+                    else
+                    {
+                        ScrollObject *poPause = GetObject(orxConfig_GetU64("Pause"));
+                        if(poPause)
+                        {
+                            DeleteObject(poPause);
+                        }
+                    }
+                }
             }
 
             // Train fixup
@@ -184,8 +199,11 @@ void ld46::Update(const orxCLOCK_INFO &_rstInfo)
             if((u32Dead > 0) && (u32Alive <= 1))
             {
                 ld46::GetInstance().CreateObject("GameOver");
-                PauseGame(orxTRUE);
             }
+        }
+        else if(orxInput_HasBeenActivated("Pause"))
+        {
+            PauseGame(orxTRUE);
         }
 
         orxConfig_PopSection();
