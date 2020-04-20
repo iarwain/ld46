@@ -146,7 +146,8 @@ void ld46::Update(const orxCLOCK_INFO &_rstInfo)
         if(!orxOBJECT(orxStructure_Get(orxConfig_GetU64("GameOver"))))
         {
             // Pause?
-            if(!orxOBJECT(orxStructure_Get(orxConfig_GetU64("Menu"))))
+            if(!orxOBJECT(orxStructure_Get(orxConfig_GetU64("Menu")))
+            && !orxOBJECT(orxStructure_Get(orxConfig_GetU64("Title"))))
             {
                 if(orxInput_HasBeenActivated("Pause"))
                 {
@@ -284,8 +285,8 @@ orxSTATUS ld46::Init()
     // Register event handler
     orxEvent_AddHandler(orxEVENT_TYPE_SPAWNER, &EventHandler);
 
-    // Go to menu
-    orxInput_SetValue("Menu", orxFLOAT_1);
+    // Go to title
+    CreateObject("Title");
 
     // Done!
     return orxSTATUS_SUCCESS;
