@@ -102,6 +102,25 @@ orxSTATUS orxFASTCALL EventHandler(const orxEVENT *_pstEvent)
                             orxConfig_PopSection();
                         }
                     }
+                    else if(!orxString_Compare(orxObject_GetName(pstObject), "DashSmoke"))
+                    {
+                        orxSPAWNER *pstSpawner = orxSPAWNER(orxObject_GetOwner(pstObject));
+
+                        if(pstSpawner)
+                        {
+                            orxOBJECT *pstPlayer = orxOBJECT(orxSpawner_GetParent(pstSpawner));
+
+                            if(pstPlayer)
+                            {
+                                orxOBJECT *pstTrain = orxOBJECT(orxObject_GetParent(pstPlayer));
+
+                                if(pstTrain)
+                                {
+                                    orxObject_Attach(pstObject, pstTrain);
+                                }
+                            }
+                        }
+                    }
 
                     break;
                 }
@@ -128,7 +147,7 @@ void ld46::Update(const orxCLOCK_INFO &_rstInfo)
         orxEvent_SendShort(orxEVENT_TYPE_SYSTEM, orxSYSTEM_EVENT_CLOSE);
     }
     // Screenshot?
-    if(orxInput_HasBeenActivated("Screenshot"))
+    else if(orxInput_HasBeenActivated("Screenshot"))
     {
         orxScreenshot_Capture();
     }

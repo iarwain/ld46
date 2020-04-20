@@ -19,6 +19,11 @@ void orxFASTCALL Player::ResetDash(const orxCLOCK_INFO *_pstClockInfo, void *_pC
     Player *poPlayer = (Player *)_pContext;
     poPlayer->bIsDashing = orxFALSE;
     poPlayer->SetSpeed(orxVECTOR_0);
+    orxSPAWNER *pstSmoke = orxOBJECT_GET_STRUCTURE(poPlayer->GetOrxObject(), SPAWNER);
+    if(pstSmoke)
+    {
+        orxSpawner_Enable(pstSmoke, orxFALSE);
+    }
 }
 
 void orxFASTCALL Player::UpdateBurnRate(const orxCLOCK_INFO *_pstClockInfo, void *_pContext)
@@ -37,6 +42,12 @@ void Player::OnCreate()
 {
     Object::OnCreate();
     orxConfig_SetBool("IsPlayer", orxTRUE);
+
+    orxSPAWNER *pstSmoke = orxOBJECT_GET_STRUCTURE(GetOrxObject(), SPAWNER);
+    if(pstSmoke)
+    {
+        orxSpawner_Enable(pstSmoke, orxFALSE);
+    }
 
     // Enables its inputs
     orxInput_EnableSet(orxConfig_GetString("Input"), orxTRUE);
@@ -129,6 +140,11 @@ void Player::Update(const orxCLOCK_INFO &_rstInfo)
                         bIsDashing = orxTRUE;
                         orxClock_AddGlobalTimer(ResetDash, orxConfig_GetFloat("DashDuration"), 1, this);
                         ld46::GetInstance().CreateObject("DashSound");
+                        orxSPAWNER *pstSmoke = orxOBJECT_GET_STRUCTURE(GetOrxObject(), SPAWNER);
+                        if(pstSmoke)
+                        {
+                            orxSpawner_Enable(pstSmoke, orxTRUE);
+                        }
                     }
 
                     bIsDashQueued = orxFALSE;
