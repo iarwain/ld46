@@ -127,18 +127,21 @@ void ld46::Update(const orxCLOCK_INFO &_rstInfo)
         // Send close event
         orxEvent_SendShort(orxEVENT_TYPE_SYSTEM, orxSYSTEM_EVENT_CLOSE);
     }
-    // Menu or reset?
-    else if(orxInput_HasBeenActivated("Menu") || orxInput_HasBeenActivated("Reset"))
+    // Menu?
+    else if(orxInput_HasBeenActivated("Menu"))
     {
-        PauseGame(orxFALSE);
-        for(ScrollObject *poObject = GetNextObject();
-            poObject;
-            poObject = GetNextObject())
+        orxConfig_PushSection("Runtime");
+        if(!orxOBJECT(orxStructure_Get(orxConfig_GetU64("Menu")))
+        && !orxOBJECT(orxStructure_Get(orxConfig_GetU64("Tutorial"))))
         {
-            DeleteObject(poObject);
-        }
-        if(orxInput_HasBeenActivated("Menu"))
-        {
+            PauseGame(orxFALSE);
+            for(ScrollObject *poObject = GetNextObject();
+                poObject;
+                poObject = GetNextObject())
+            {
+                DeleteObject(poObject);
+            }
+
             orxConfig_PushSection("Runtime");
             orxConfig_SetU32("Player1Score", 0);
             orxConfig_SetU32("Player2Score", 0);
@@ -147,16 +150,24 @@ void ld46::Update(const orxCLOCK_INFO &_rstInfo)
             orxConfig_PopSection();
             CreateObject("Menu");
         }
-        else
+        orxConfig_PopSection();
+    }
+    else if(orxInput_HasBeenActivated("Reset"))
+    {
+        PauseGame(orxFALSE);
+        for(ScrollObject *poObject = GetNextObject();
+            poObject;
+            poObject = GetNextObject())
         {
-            orxConfig_PushSection("Runtime");
-            if(!orxString_Compare(orxConfig_GetString("Players"), "1P"))
-            {
-                orxConfig_SetU32("Player1Score", 0);
-            }
-            orxConfig_PopSection();
-            CreateObject("Scene");
+            DeleteObject(poObject);
         }
+        orxConfig_PushSection("Runtime");
+        if(!orxString_Compare(orxConfig_GetString("Players"), "1P"))
+        {
+            orxConfig_SetU32("Player1Score", 0);
+        }
+        orxConfig_PopSection();
+        CreateObject("Scene");
     }
     else
     {
