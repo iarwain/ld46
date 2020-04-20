@@ -127,6 +127,11 @@ void ld46::Update(const orxCLOCK_INFO &_rstInfo)
         // Send close event
         orxEvent_SendShort(orxEVENT_TYPE_SYSTEM, orxSYSTEM_EVENT_CLOSE);
     }
+    // Screenshot?
+    if(orxInput_HasBeenActivated("Screenshot"))
+    {
+        orxScreenshot_Capture();
+    }
     // Menu?
     else if(orxInput_HasBeenActivated("Menu"))
     {
