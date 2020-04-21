@@ -364,7 +364,7 @@ orxSTATUS ld46::Run()
 void ld46::Exit()
 {
     // Save highscores
-    orxConfig_Save("score.dat", orxTRUE, &SaveCallback);
+    orxConfig_Save(orxFile_GetApplicationSaveDirectory("RailroadLantern/score.dat"), orxTRUE, &SaveCallback);
 }
 
 /** BindObjects function, ScrollObject-derived classes are bound to config sections here
@@ -388,6 +388,9 @@ orxSTATUS ld46::Bootstrap() const
     orxResource_AddStorage(orxCONFIG_KZ_RESOURCE_GROUP, "game.dat", orxFALSE);
     orxResource_AddStorage(orxCONFIG_KZ_RESOURCE_GROUP, "../data/config", orxFALSE);
     orxResource_AddStorage(orxCONFIG_KZ_RESOURCE_GROUP, "../data/font", orxFALSE);
+
+    // Loads scores
+    orxConfig_Load(orxFile_GetApplicationSaveDirectory("RailroadLantern/score.dat"));
 
     // Return orxSTATUS_FAILURE to prevent orx from loading the default config file
     return orxSTATUS_SUCCESS;
