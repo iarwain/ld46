@@ -32,7 +32,7 @@ void orxFASTCALL Player::UpdateBurnRate(const orxCLOCK_INFO *_pstClockInfo, void
     if(!poPlayer->bIsDead)
     {
         poPlayer->PushConfigSection();
-        poPlayer->u32BurnRateIndex = orxMIN((orxU32)orxConfig_GetListCount("LampBurnRate"), poPlayer->u32BurnRateIndex + 1);
+        poPlayer->u32BurnRateIndex = orxMIN((orxU32)orxConfig_GetListCount("LampBurnRate") - 1, poPlayer->u32BurnRateIndex + 1);
         orxClock_AddGlobalTimer(UpdateBurnRate, orxConfig_GetFloat("LampCapacity") / orxConfig_GetListFloat("LampBurnRate", poPlayer->u32BurnRateIndex), 1, poPlayer);
         poPlayer->PopConfigSection();
     }
