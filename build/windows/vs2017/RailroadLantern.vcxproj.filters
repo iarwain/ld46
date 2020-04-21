@@ -2,25 +2,19 @@
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <Filter Include="src">
-      <UniqueIdentifier>{5D2815C3-6929-5C41-80D7-B1B705B2975C}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\imgui">
-      <UniqueIdentifier>{16D7AF0D-3F77-4849-AF69-3E10BCDBB865}</UniqueIdentifier>
+      <UniqueIdentifier>{24088332-B1E1-E748-BCA0-C765BA03D87F}</UniqueIdentifier>
     </Filter>
     <Filter Include="include">
-      <UniqueIdentifier>{E12EA23E-E328-9F47-8AE8-6F8CE046BD15}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="include\imgui">
-      <UniqueIdentifier>{BD2997C4-1315-DC4B-BC75-1C40F7929FC8}</UniqueIdentifier>
+      <UniqueIdentifier>{F34AD5E8-1C82-C047-AF1E-69B1D349E5F4}</UniqueIdentifier>
     </Filter>
     <Filter Include="include\Scroll">
-      <UniqueIdentifier>{DA09B523-044C-4242-AB7E-0975541AF4A9}</UniqueIdentifier>
+      <UniqueIdentifier>{7BC91487-1D9B-374E-8B5B-EE4E73B99814}</UniqueIdentifier>
     </Filter>
     <Filter Include="inline">
-      <UniqueIdentifier>{692937A8-C163-6D42-B1B2-4EF0C51053B9}</UniqueIdentifier>
+      <UniqueIdentifier>{0A4C8C00-498B-244A-AF91-1FD8B24D6497}</UniqueIdentifier>
     </Filter>
     <Filter Include="config">
-      <UniqueIdentifier>{736279BB-BAC5-F34D-B31B-D1FA8C98DC2C}</UniqueIdentifier>
+      <UniqueIdentifier>{498BF514-346E-1B45-BC78-DBBF1903C206}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -45,19 +39,19 @@
     <None Include="..\..\..\data\config\dev.ini">
       <Filter>config</Filter>
     </None>
-    <None Include="..\..\..\data\config\ld46.ini">
-      <Filter>config</Filter>
-    </None>
-    <None Include="..\..\..\data\config\ld46d.ini">
-      <Filter>config</Filter>
-    </None>
-    <None Include="..\..\..\data\config\ld46p.ini">
-      <Filter>config</Filter>
-    </None>
     <None Include="..\..\..\data\config\object.ini">
       <Filter>config</Filter>
     </None>
     <None Include="..\..\..\data\config\player.ini">
+      <Filter>config</Filter>
+    </None>
+    <None Include="..\..\..\data\config\RailroadLantern.ini">
+      <Filter>config</Filter>
+    </None>
+    <None Include="..\..\..\data\config\RailroadLanternd.ini">
+      <Filter>config</Filter>
+    </None>
+    <None Include="..\..\..\data\config\RailroadLanternp.ini">
       <Filter>config</Filter>
     </None>
     <None Include="..\..\..\data\config\SettingsTemplate.ini">
@@ -95,24 +89,6 @@
     <ClInclude Include="..\..\..\include\Train.h">
       <Filter>include</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\include\imgui\imconfig.h">
-      <Filter>include\imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\imgui\imgui.h">
-      <Filter>include\imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\imgui\imgui_internal.h">
-      <Filter>include\imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\imgui\imstb_rectpack.h">
-      <Filter>include\imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\imgui\imstb_textedit.h">
-      <Filter>include\imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\imgui\imstb_truetype.h">
-      <Filter>include\imgui</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\include\Scroll\Scroll.h">
       <Filter>include\Scroll</Filter>
     </ClInclude>
@@ -136,26 +112,11 @@
     <ClCompile Include="..\..\..\src\orxArchive.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\src\orxImGui.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\src\Player.cpp">
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\Train.cpp">
       <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\src\imgui\imgui.cpp">
-      <Filter>src\imgui</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\src\imgui\imgui_demo.cpp">
-      <Filter>src\imgui</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\src\imgui\imgui_draw.cpp">
-      <Filter>src\imgui</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\src\imgui\imgui_widgets.cpp">
-      <Filter>src\imgui</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
