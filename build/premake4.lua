@@ -258,7 +258,6 @@ project "RailroadLantern"
     includedirs
     {
         "../include/Scroll",
-        "../include/imgui",
         "../include"
     }
 

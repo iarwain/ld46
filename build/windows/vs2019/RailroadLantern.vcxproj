@@ -27,7 +27,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{42BD2DCA-0629-C542-B24A-6E29355DDEEB}</ProjectGuid>
+    <ProjectGuid>{C8EE1B9E-698B-3746-85C8-859F7DC94677}</ProjectGuid>
     <RootNamespace>RailroadLantern</RootNamespace>
     <Keyword>Win32Proj</Keyword>
   </PropertyGroup>
@@ -142,7 +142,7 @@
     <ClCompile>
       <AdditionalOptions>/MP /EHsc %(AdditionalOptions)</AdditionalOptions>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(ORX)\include;..\..\..\include\Scroll;..\..\..\include\imgui;..\..\..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ORX)\include;..\..\..\include\Scroll;..\..\..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>__orxDEBUG__;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>false</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -158,7 +158,7 @@
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>__orxDEBUG__;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(ORX)\include;..\..\..\include\Scroll;..\..\..\include\imgui;..\..\..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ORX)\include;..\..\..\include\Scroll;..\..\..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -177,7 +177,7 @@
     <ClCompile>
       <AdditionalOptions>/MP /EHsc %(AdditionalOptions)</AdditionalOptions>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(ORX)\include;..\..\..\include\Scroll;..\..\..\include\imgui;..\..\..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ORX)\include;..\..\..\include\Scroll;..\..\..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>__orxDEBUG__;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>false</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -194,7 +194,7 @@
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>__orxDEBUG__;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(ORX)\include;..\..\..\include\Scroll;..\..\..\include\imgui;..\..\..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ORX)\include;..\..\..\include\Scroll;..\..\..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -213,7 +213,7 @@
     <ClCompile>
       <AdditionalOptions>/MP /EHsc %(AdditionalOptions)</AdditionalOptions>
       <Optimization>Full</Optimization>
-      <AdditionalIncludeDirectories>$(ORX)\include;..\..\..\include\Scroll;..\..\..\include\imgui;..\..\..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ORX)\include;..\..\..\include\Scroll;..\..\..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>__orxPROFILER__;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>false</MinimalRebuild>
       <StringPooling>true</StringPooling>
@@ -230,7 +230,7 @@
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>__orxPROFILER__;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(ORX)\include;..\..\..\include\Scroll;..\..\..\include\imgui;..\..\..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ORX)\include;..\..\..\include\Scroll;..\..\..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -251,7 +251,7 @@
     <ClCompile>
       <AdditionalOptions>/MP /EHsc %(AdditionalOptions)</AdditionalOptions>
       <Optimization>Full</Optimization>
-      <AdditionalIncludeDirectories>$(ORX)\include;..\..\..\include\Scroll;..\..\..\include\imgui;..\..\..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ORX)\include;..\..\..\include\Scroll;..\..\..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>__orxPROFILER__;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>false</MinimalRebuild>
       <StringPooling>true</StringPooling>
@@ -269,7 +269,7 @@
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>__orxPROFILER__;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(ORX)\include;..\..\..\include\Scroll;..\..\..\include\imgui;..\..\..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ORX)\include;..\..\..\include\Scroll;..\..\..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -290,7 +290,7 @@
     <ClCompile>
       <AdditionalOptions>/MP /EHsc %(AdditionalOptions)</AdditionalOptions>
       <Optimization>Full</Optimization>
-      <AdditionalIncludeDirectories>$(ORX)\include;..\..\..\include\Scroll;..\..\..\include\imgui;..\..\..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ORX)\include;..\..\..\include\Scroll;..\..\..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions></PreprocessorDefinitions>
       <MinimalRebuild>false</MinimalRebuild>
       <StringPooling>true</StringPooling>
@@ -307,7 +307,7 @@
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions></PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(ORX)\include;..\..\..\include\Scroll;..\..\..\include\imgui;..\..\..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ORX)\include;..\..\..\include\Scroll;..\..\..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -328,7 +328,7 @@
     <ClCompile>
       <AdditionalOptions>/MP /EHsc %(AdditionalOptions)</AdditionalOptions>
       <Optimization>Full</Optimization>
-      <AdditionalIncludeDirectories>$(ORX)\include;..\..\..\include\Scroll;..\..\..\include\imgui;..\..\..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ORX)\include;..\..\..\include\Scroll;..\..\..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions></PreprocessorDefinitions>
       <MinimalRebuild>false</MinimalRebuild>
       <StringPooling>true</StringPooling>
@@ -346,7 +346,7 @@
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions></PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(ORX)\include;..\..\..\include\Scroll;..\..\..\include\imgui;..\..\..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ORX)\include;..\..\..\include\Scroll;..\..\..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
