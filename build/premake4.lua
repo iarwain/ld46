@@ -252,6 +252,9 @@ project "RailroadLantern"
         "../data/config/**.ini"
     }
 
+    configuration {"windows"}
+        files {"../data/resource/**.rc"}
+
     includedirs
     {
         "../include/Scroll",

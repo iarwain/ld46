@@ -27,7 +27,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{E316D60D-C5FB-5E46-B6C4-480CEA310D0F}</ProjectGuid>
+    <ProjectGuid>{42BD2DCA-0629-C542-B24A-6E29355DDEEB}</ProjectGuid>
     <RootNamespace>RailroadLantern</RootNamespace>
     <Keyword>Win32Proj</Keyword>
   </PropertyGroup>
@@ -405,6 +405,9 @@
     <None Include="..\..\..\data\config\train3.ini" />
     <None Include="..\..\..\data\config\train4.ini" />
     <None Include="..\..\..\data\config\train5.ini" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="..\..\..\data\resource\ld46.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

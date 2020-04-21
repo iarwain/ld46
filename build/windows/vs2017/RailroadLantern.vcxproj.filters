@@ -2,19 +2,25 @@
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <Filter Include="src">
-      <UniqueIdentifier>{24088332-B1E1-E748-BCA0-C765BA03D87F}</UniqueIdentifier>
+      <UniqueIdentifier>{1D211AE8-1841-A54E-9327-D787C2FDD184}</UniqueIdentifier>
     </Filter>
     <Filter Include="include">
-      <UniqueIdentifier>{F34AD5E8-1C82-C047-AF1E-69B1D349E5F4}</UniqueIdentifier>
+      <UniqueIdentifier>{117150B8-1935-574A-B22C-D958E19F4C6B}</UniqueIdentifier>
     </Filter>
     <Filter Include="include\Scroll">
-      <UniqueIdentifier>{7BC91487-1D9B-374E-8B5B-EE4E73B99814}</UniqueIdentifier>
+      <UniqueIdentifier>{353E7CFF-2602-4348-BF55-72C8D628F2E6}</UniqueIdentifier>
     </Filter>
     <Filter Include="inline">
-      <UniqueIdentifier>{0A4C8C00-498B-244A-AF91-1FD8B24D6497}</UniqueIdentifier>
+      <UniqueIdentifier>{F4870C3A-E012-8E42-8EBA-AC7F66F183DC}</UniqueIdentifier>
     </Filter>
     <Filter Include="config">
-      <UniqueIdentifier>{498BF514-346E-1B45-BC78-DBBF1903C206}</UniqueIdentifier>
+      <UniqueIdentifier>{9F1FCE99-DDFF-4E44-84E6-B805C6260683}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="data">
+      <UniqueIdentifier>{50C9FD64-CF15-3F40-AAAA-A5CBC46E90C8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="data\resource">
+      <UniqueIdentifier>{D7EBA442-B484-4948-8160-3EF9144AFF90}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -118,5 +124,10 @@
     <ClCompile Include="..\..\..\src\Train.cpp">
       <Filter>src</Filter>
     </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="..\..\..\data\resource\ld46.rc">
+      <Filter>data\resource</Filter>
+    </ResourceCompile>
   </ItemGroup>
 </Project>

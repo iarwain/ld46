@@ -1,0 +1,38 @@
+#include <windows.h>
+#include <commctrl.h>
+#include <richedit.h>
+
+#ifndef IDC_STATIC
+#define IDC_STATIC (-1)
+#endif
+
+#define IDI_ICON1                               102
+
+LANGUAGE LANG_NEUTRAL, SUBLANG_NEUTRAL
+IDI_ICON1          ICON           "..\\icon\\256.ico"
+
+1 VERSIONINFO
+FILEVERSION     1,0,0,0
+PRODUCTVERSION  1,0,0,0
+
+BEGIN
+  BLOCK "StringFileInfo"
+  BEGIN
+    BLOCK "040904E4"
+    BEGIN
+      VALUE "CompanyName", "Team NoFun"
+      VALUE "FileDescription", "Railroad Lantern"
+      VALUE "FileVersion", "1.0"
+      VALUE "InternalName", "RailroadLantern"
+      VALUE "LegalCopyright", "Team NoFun, Inc."
+      VALUE "OriginalFilename", "RailroadLantern.exe"
+      VALUE "ProductName", "Railroad Lantern"
+      VALUE "ProductVersion", "1.0"
+    END
+  END
+
+  BLOCK "VarFileInfo"
+  BEGIN
+    VALUE "Translation", 0x409, 1252
+  END
+END
