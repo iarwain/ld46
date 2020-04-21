@@ -16,15 +16,15 @@ Controls:
 
 Player1
 -------
-Move                  - Arrow keys
-Dash                  - Right Shift
+Move                    - Arrow keys
+Dash                    - Right Shift
             .. or ..
 Gamepad #1
 
 Player2
 -------
-Move                  - WASD
-Dash                  - Left Shift
+Move                    - WASD
+Dash                    - Left Shift
             .. or ..
 Gamepad #2
 
