@@ -11,10 +11,6 @@
 #include "Train.h"
 #include "Player.h"
 
-#define orxIMGUI_HEADER_ONLY
-#include "orxImGui.cpp"
-#undef orxIMGUI_HEADER_ONLY
-
 #define orxARCHIVE_HEADER_ONLY
 #include "orxArchive.cpp"
 #undef orxARCHIVE_HEADER_ONLY

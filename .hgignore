@@ -6,3 +6,5 @@ build/windows/**/obj/*
 build/windows/**/.vs/*
 **.cih
 **/dev.ini
+**.dat
+bin/**.png

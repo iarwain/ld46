@@ -27,7 +27,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{74DBAF6C-7268-9E44-A670-B1D42F8A7405}</ProjectGuid>
+    <ProjectGuid>{E316D60D-C5FB-5E46-B6C4-480CEA310D0F}</ProjectGuid>
     <RootNamespace>RailroadLantern</RootNamespace>
     <Keyword>Win32Proj</Keyword>
   </PropertyGroup>
@@ -368,12 +368,6 @@
     <ClInclude Include="..\..\..\include\Object.h" />
     <ClInclude Include="..\..\..\include\Player.h" />
     <ClInclude Include="..\..\..\include\Train.h" />
-    <ClInclude Include="..\..\..\include\imgui\imconfig.h" />
-    <ClInclude Include="..\..\..\include\imgui\imgui.h" />
-    <ClInclude Include="..\..\..\include\imgui\imgui_internal.h" />
-    <ClInclude Include="..\..\..\include\imgui\imstb_rectpack.h" />
-    <ClInclude Include="..\..\..\include\imgui\imstb_textedit.h" />
-    <ClInclude Include="..\..\..\include\imgui\imstb_truetype.h" />
     <ClInclude Include="..\..\..\include\Scroll\Scroll.h" />
     <ClInclude Include="..\..\..\include\Scroll\ScrollBase.h" />
     <ClInclude Include="..\..\..\include\Scroll\ScrollEd.h" />
@@ -386,19 +380,9 @@
     </ClCompile>
     <ClCompile Include="..\..\..\src\orxArchive.cpp">
     </ClCompile>
-    <ClCompile Include="..\..\..\src\orxImGui.cpp">
-    </ClCompile>
     <ClCompile Include="..\..\..\src\Player.cpp">
     </ClCompile>
     <ClCompile Include="..\..\..\src\Train.cpp">
-    </ClCompile>
-    <ClCompile Include="..\..\..\src\imgui\imgui.cpp">
-    </ClCompile>
-    <ClCompile Include="..\..\..\src\imgui\imgui_demo.cpp">
-    </ClCompile>
-    <ClCompile Include="..\..\..\src\imgui\imgui_draw.cpp">
-    </ClCompile>
-    <ClCompile Include="..\..\..\src\imgui\imgui_widgets.cpp">
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -409,11 +393,11 @@
     <None Include="..\..\..\data\config\commondev.ini" />
     <None Include="..\..\..\data\config\CreationTemplate.ini" />
     <None Include="..\..\..\data\config\dev.ini" />
-    <None Include="..\..\..\data\config\ld46.ini" />
-    <None Include="..\..\..\data\config\ld46d.ini" />
-    <None Include="..\..\..\data\config\ld46p.ini" />
     <None Include="..\..\..\data\config\object.ini" />
     <None Include="..\..\..\data\config\player.ini" />
+    <None Include="..\..\..\data\config\RailroadLantern.ini" />
+    <None Include="..\..\..\data\config\RailroadLanternd.ini" />
+    <None Include="..\..\..\data\config\RailroadLanternp.ini" />
     <None Include="..\..\..\data\config\SettingsTemplate.ini" />
     <None Include="..\..\..\data\config\train.ini" />
     <None Include="..\..\..\data\config\train1.ini" />
