@@ -27,7 +27,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{C8EE1B9E-698B-3746-85C8-859F7DC94677}</ProjectGuid>
+    <ProjectGuid>{B49E815E-2C47-9A42-A263-2C5CA965D797}</ProjectGuid>
     <RootNamespace>RailroadLantern</RootNamespace>
     <Keyword>Win32Proj</Keyword>
   </PropertyGroup>

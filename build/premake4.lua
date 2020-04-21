@@ -254,6 +254,7 @@ project "RailroadLantern"
 
     configuration {"windows"}
         files {"../data/resource/**.rc"}
+    configuration {}
 
     includedirs
     {
