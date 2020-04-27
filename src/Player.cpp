@@ -229,17 +229,9 @@ orxBOOL Player::OnCollide(ScrollObject *_poCollider, const orxSTRING _zPartName,
             orxConfig_SetFloat(GetConfigVar("Oil"), orxFLOAT_0);
             orxConfig_PopSection();
         }
-        else
+        else if(bIsDashing)
         {
-            if (bIsDashing)
-            {
-                orxConfig_PushSection(_zColliderPartName);
-                if (!orxConfig_GetBool("IsDoor"))
-                {
-                    ld46::GetInstance().CreateObject("HitSound");
-                }
-                orxConfig_PopSection();
-            }
+            ld46::GetInstance().CreateObject("HitSound");
         }
     }
 
