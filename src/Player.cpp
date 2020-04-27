@@ -49,6 +49,13 @@ void Player::OnCreate()
         orxSpawner_Enable(pstSmoke, orxFALSE);
     }
 
+    // Inits vars
+    zLastAnim           = orxNULL;
+    u32BurnRateIndex    = 0;
+    bIsDashing          = orxFALSE;
+    bIsDead             = orxFALSE;
+    bIsDashQueued       = orxFALSE;
+
     // Enables its inputs
     orxInput_EnableSet(orxConfig_GetString("Input"), orxTRUE);
 
