@@ -201,10 +201,25 @@ orxBOOL Player::OnCollide(ScrollObject *_poCollider, const orxSTRING _zPartName,
     {
         if(orxString_SearchString(_zColliderPartName, "Oil"))
         {
+            PushConfigSection();
+
+            orxFLOAT fLampRefill = orxConfig_GetFloat("LampRefill");
+            orxFLOAT fLampCapacity = orxConfig_GetFloat("LampCapacity");
+
             orxConfig_PushSection("Runtime");
+
+            const orxSTRING zOil = GetConfigVar("Oil");
+            orxFLOAT fLampOil = orxConfig_GetFloat(zOil);
+            fLampOil = orxMIN(fLampOil + fLampRefill, fLampCapacity);
+            orxConfig_SetFloat(zOil, fLampOil);
+
             orxConfig_SetU64("Collider", GetGUID());
+
             orxConfig_PopSection();
+
             _poCollider->AddConditionalTrack("PickUp");
+
+            PopConfigSection();
         }
         else if(orxString_SearchString(_zColliderPartName, "Death"))
         {
