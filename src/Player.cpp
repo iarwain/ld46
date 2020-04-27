@@ -111,6 +111,8 @@ void Player::Update(const orxCLOCK_INFO &_rstInfo)
         orxFLOAT fLampOil = orxConfig_GetFloat(zName);
         fLampOil = orxMAX(fLampOil - fLampBurnRate * _rstInfo.fDT, orxFLOAT_0);
         orxConfig_SetFloat(zName, fLampOil);
+        zName = GetConfigVar("RateIndex");
+        orxConfig_SetU32(zName, u32BurnRateIndex);
         orxConfig_PopSection();
 
         // Update light
