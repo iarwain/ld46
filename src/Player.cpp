@@ -63,6 +63,7 @@ void Player::OnCreate()
     orxFLOAT fLampCapacity = orxConfig_GetFloat("LampCapacity");
     orxConfig_PushSection("Runtime");
     orxConfig_SetFloat(GetConfigVar("Oil"), fLampCapacity);
+    orxLOG("%s: [INIT] %g", GetModelName(), orxConfig_GetFloat(GetConfigVar("Oil")));
     orxConfig_PopSection();
 
     // Inits burn rate
@@ -107,12 +108,13 @@ void Player::Update(const orxCLOCK_INFO &_rstInfo)
         // Update lamp
         orxFLOAT fLampBurnRate = orxConfig_GetListFloat("LampBurnRate", u32BurnRateIndex);
         orxConfig_PushSection("Runtime");
-        const orxSTRING zName = GetConfigVar("Oil");
-        orxFLOAT fLampOil = orxConfig_GetFloat(zName);
+        const orxSTRING zOil = GetConfigVar("Oil");
+        orxFLOAT fLampOil = orxConfig_GetFloat(zOil);
         fLampOil = orxMAX(fLampOil - fLampBurnRate * _rstInfo.fDT, orxFLOAT_0);
-        orxConfig_SetFloat(zName, fLampOil);
-        zName = GetConfigVar("RateIndex");
-        orxConfig_SetU32(zName, u32BurnRateIndex);
+        orxLOG("%s: [BURN] %g -> %g / Rate %g / DT %g", GetModelName(), orxConfig_GetFloat(zOil), fLampOil, fLampBurnRate, _rstInfo.fDT);
+        orxConfig_SetFloat(zOil, fLampOil);
+        zOil = GetConfigVar("RateIndex");
+        orxConfig_SetU32(zOil, u32BurnRateIndex);
         orxConfig_PopSection();
 
         // Update light
@@ -213,6 +215,7 @@ orxBOOL Player::OnCollide(ScrollObject *_poCollider, const orxSTRING _zPartName,
             const orxSTRING zOil = GetConfigVar("Oil");
             orxFLOAT fLampOil = orxConfig_GetFloat(zOil);
             fLampOil = orxMIN(fLampOil + fLampRefill, fLampCapacity);
+            orxLOG("%s: [COLLIDE] %g -> %g", GetModelName(), orxConfig_GetFloat(zOil), fLampOil);
             orxConfig_SetFloat(zOil, fLampOil);
 
             orxConfig_SetU64("Collider", GetGUID());
