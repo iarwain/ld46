@@ -9,7 +9,7 @@ const orxSTRING Player::GetConfigVar(const orxSTRING _zVar) const
 {
     static orxCHAR sacName[32] = {};
 
-    orxString_NPrint(sacName, sizeof(sacName) - 1, "%s%s", GetModelName(), _zVar);
+    orxString_NPrint(sacName, sizeof(sacName) - 1, "%s%s", GetName(), _zVar);
 
     return sacName;
 }
@@ -63,7 +63,7 @@ void Player::OnCreate()
     orxFLOAT fLampCapacity = orxConfig_GetFloat("LampCapacity");
     orxConfig_PushSection("Runtime");
     orxConfig_SetFloat(GetConfigVar("Oil"), fLampCapacity);
-    orxLOG("%s: [INIT] %g", GetModelName(), orxConfig_GetFloat(GetConfigVar("Oil")));
+    //orxLOG("%s: [INIT] %g", GetName(), orxConfig_GetFloat(GetConfigVar("Oil")));
     orxConfig_PopSection();
 
     // Inits burn rate
@@ -111,7 +111,7 @@ void Player::Update(const orxCLOCK_INFO &_rstInfo)
         const orxSTRING zOil = GetConfigVar("Oil");
         orxFLOAT fLampOil = orxConfig_GetFloat(zOil);
         fLampOil = orxMAX(fLampOil - fLampBurnRate * _rstInfo.fDT, orxFLOAT_0);
-        orxLOG("%s: [BURN] %g -> %g / Rate %g / DT %g", GetModelName(), orxConfig_GetFloat(zOil), fLampOil, fLampBurnRate, _rstInfo.fDT);
+        //orxLOG("%s: [BURN] %g -> %g / Rate %g / DT %g", GetName(), orxConfig_GetFloat(zOil), fLampOil, fLampBurnRate, _rstInfo.fDT);
         orxConfig_SetFloat(zOil, fLampOil);
         zOil = GetConfigVar("RateIndex");
         orxConfig_SetU32(zOil, u32BurnRateIndex);
@@ -199,11 +199,11 @@ void Player::Update(const orxCLOCK_INFO &_rstInfo)
     }
 }
 
-orxBOOL Player::OnCollide(ScrollObject *_poCollider, const orxSTRING _zPartName, const orxSTRING _zColliderPartName, const orxVECTOR &_rvPosition, const orxVECTOR &_rvNormal)
+void Player::OnCollide(ScrollObject *_poCollider, orxBODY_PART *_pstPart, orxBODY_PART *_pstColliderPart, const orxVECTOR &_rvPosition, const orxVECTOR &_rvNormal)
 {
     if(!bIsDead)
     {
-        if(orxString_SearchString(_zColliderPartName, "Oil"))
+        if(orxString_SearchString(orxBody_GetPartName(_pstColliderPart), "Oil"))
         {
             PushConfigSection();
 
@@ -215,7 +215,7 @@ orxBOOL Player::OnCollide(ScrollObject *_poCollider, const orxSTRING _zPartName,
             const orxSTRING zOil = GetConfigVar("Oil");
             orxFLOAT fLampOil = orxConfig_GetFloat(zOil);
             fLampOil = orxMIN(fLampOil + fLampRefill, fLampCapacity);
-            orxLOG("%s: [COLLIDE] %g -> %g", GetModelName(), orxConfig_GetFloat(zOil), fLampOil);
+            //orxLOG("%s: [COLLIDE] %g -> %g", GetName(), orxConfig_GetFloat(zOil), fLampOil);
             orxConfig_SetFloat(zOil, fLampOil);
 
             orxConfig_SetU64("Collider", GetGUID());
@@ -226,7 +226,7 @@ orxBOOL Player::OnCollide(ScrollObject *_poCollider, const orxSTRING _zPartName,
 
             PopConfigSection();
         }
-        else if(orxString_SearchString(_zColliderPartName, "Death"))
+        else if(orxString_SearchString(orxBody_GetPartName(_pstColliderPart), "Death"))
         {
             orxConfig_PushSection("Runtime");
             orxConfig_SetFloat(GetConfigVar("Oil"), orxFLOAT_0);
@@ -237,6 +237,4 @@ orxBOOL Player::OnCollide(ScrollObject *_poCollider, const orxSTRING _zPartName,
             ld46::GetInstance().CreateObject("HitSound");
         }
     }
-
-    return orxTRUE;
 }

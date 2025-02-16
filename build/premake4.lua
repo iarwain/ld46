@@ -11,7 +11,8 @@ function initconfigurations ()
     {
         "Debug",
         "Profile",
-        "Release"
+        "Release",
+        "Bundle"
     }
 end
 
@@ -22,19 +23,23 @@ function initplatforms ()
             return
             {
                 "x64",
-                "x32"
+                "x32",
+                "web"
             }
         else
             return
             {
                 "x32",
-                "x64"
+                "x64",
+                "web"
             }
         end
     elseif os.is ("macosx") then
         return
         {
-            "x64"
+            "universal64",
+            "x64",
+            "web"
         }
     end
 end
@@ -45,7 +50,7 @@ function defaultaction (name, action)
    end
 end
 
-defaultaction ("windows", "vs2019")
+defaultaction ("windows", "vs2022")
 defaultaction ("linux", "gmake")
 defaultaction ("macosx", "gmake")
 
@@ -100,22 +105,21 @@ solution "ld46"
         "NoIncrementalLink",
         "NoEditAndContinue",
         "NoMinimalRebuild",
-        "Symbols",
-        "StaticRuntime"
+        "Symbols"
     }
 
-    configuration {"not xcode*"}
+    configuration {"not web"}
+        flags {"StaticRuntime"}
+
+    configuration {"not xcode*", "not web"}
         includedirs {"$(ORX)/include"}
         libdirs {"$(ORX)/lib/dynamic"}
 
-    configuration {"xcode*"}
+    configuration {"xcode*", "not web"}
         includedirs {"../include"}
         libdirs {"../lib/dynamic"}
 
-    configuration {"not vs2015", "not vs2017", "not vs2019"}
-        flags {"EnableSSE2"}
-
-    configuration {"not x64"}
+    configuration {"x32"}
         flags {"EnableSSE2"}
 
     configuration {"not windows"}
@@ -136,14 +140,80 @@ solution "ld46"
         flags {"Optimize", "NoRTTI"}
         links {"orx"}
 
-    configuration {"windows", "*Release*"}
+    configuration {"*Bundle*"}
+        flags {"Optimize", "NoRTTI"}
+        links {"orx"}
+
+    configuration {"windows", "*Release*", "not web"}
         kind ("WindowedApp")
+
+    configuration {"web"}
+        targetextension ".js"
+        targetsuffix ""
+        targetdir "../bin/web"
+        buildoptions
+        {
+            "-DorxWEB_EXECUTABLE_NAME='\"RailroadLantern.wasm\"'",
+            "-pthread"
+        }
+        linkoptions
+        {
+            "--preload-file " .. copybase .. "/build/RailroadLantern.obr@/",
+            "-sPTHREAD_POOL_SIZE=navigator.hardwareConcurrency",
+            "-sAUDIO_WORKLET=1",
+            "-sWASM_WORKERS=1",
+            "-sSTACK_SIZE=1048576",
+            "-sASYNCIFY",
+            "-sALLOW_MEMORY_GROWTH",
+            "-sFULL_ES3=1",
+            "-pthread",
+            "-lidbfs.js",
+            "$(ORX)/../extern/emscripten-glfw/lib/libglfw3.a",
+            "--js-library $(ORX)/../extern/emscripten-glfw/lib/lib_emscripten_glfw3.js"
+        }
+        links
+        {
+            "basisu",
+            "webpdecoder",
+            "liquidfun"
+        }
+        includedirs {"$(ORX)/include"}
+        libdirs {
+            "$(ORX)/lib/static/web",
+            "$(ORX)/../extern/emscripten-glfw/lib",
+            "$(ORX)/../extern/basisu/lib/web",
+            "$(ORX)/../extern/libwebp/lib/web",
+            "$(ORX)/../extern/LiquidFun-1.1.0/lib/web"
+        }
+
+    configuration {"web", "*Release*"}
+        links {"orx"}
+        linkoptions {"-O2"}
+
+    configuration {"web", "*Profile*"}
+        links {"orxp"}
+        linkoptions {"-O2"}
+
+    configuration {"web", "*Debug*"}
+        links {"orxd"}
+        linkoptions {"-gsource-map"}
+
+    configuration {"web", "Windows"}
+        prelinkcommands {"cd " .. copybase .. "/bin && RailroadLantern -b ../build/RailroadLantern.obr"}
+        postbuildcommands {"del " .. path.translate(copybase, "\\") .. "\\build\\RailroadLantern.obr"}
+
+    configuration {"web", "not Windows"}
+        prelinkcommands {"cd " .. copybase .. "/bin && ./RailroadLantern -b ../build/RailroadLantern.obr"}
+        postbuildcommands {"rm " .. copybase .. "/build/RailroadLantern.obr"}
 
 
 -- Linux
 
-    configuration {"linux"}
-        buildoptions {"-Wno-unused-function"}
+    configuration {"linux", "not web"}
+        buildoptions
+        {
+            "-Wno-unused-function"
+        }
         linkoptions {"-Wl,-rpath ./", "-Wl,--export-dynamic"}
         links
         {
@@ -153,42 +223,41 @@ solution "ld46"
         }
 
     -- This prevents an optimization bug from happening with some versions of gcc on linux
-    configuration {"linux", "not *Debug*"}
+    configuration {"linux", "not *Debug*", "not web"}
         buildoptions {"-fschedule-insns"}
 
 
 -- Mac OS X
 
-    configuration {"macosx"}
+    configuration {"macosx", "not web"}
         buildoptions
         {
-            "-mmacosx-version-min=10.9",
             "-stdlib=libc++",
             "-gdwarf-2",
+            "-Wno-unused-function",
             "-Wno-write-strings"
         }
         linkoptions
         {
-            "-mmacosx-version-min=10.9",
             "-stdlib=libc++",
             "-dead_strip"
         }
 
-    configuration {"macosx", "not codelite", "not codeblocks"}
+    configuration {"macosx", "not codelite", "not codeblocks", "not web"}
         links
         {
             "Foundation.framework",
             "AppKit.framework"
         }
 
-    configuration {"macosx", "codelite or codeblocks"}
+    configuration {"macosx", "codelite or codeblocks", "not web"}
         linkoptions
         {
             "-framework Foundation",
             "-framework AppKit"
         }
 
-    configuration {"macosx", "x32"}
+    configuration {"macosx", "x32", "not web"}
         buildoptions
         {
             "-mfix-and-continue"
@@ -197,7 +266,7 @@ solution "ld46"
 
 -- Windows
 
-    configuration {"windows", "vs*"}
+    configuration {"windows", "vs*", "not web"}
         buildoptions
         {
             "/MP",
@@ -246,48 +315,47 @@ project "RailroadLantern"
     files
     {
         "../src/**.cpp",
+        "../src/**.hpp",
         "../src/**.c",
         "../include/**.h",
-        "../include/**.inl",
+        "../include/**.inc",
+        "../build/premake4.lua",
         "../data/config/**.ini"
     }
 
-    configuration {"windows"}
-        files {"../data/resource/**.rc"}
-    configuration {}
-
     includedirs
     {
-        "../include/Scroll",
+        "../include/extensions",
         "../include"
     }
 
-    configuration {"windows", "vs*"}
-        buildoptions {"/EHsc"}
-
     vpaths
     {
-        ["inline"] = {"**.inl"},
-        ["config"] = {"**.ini"}
+        ["bundle"] = {"**.inc"},
+        ["build"] = {"**premake4.lua"},
+        ["config/**"] = {"../data/config/**.ini"}
     }
+
+    configuration {"*Bundle*", "not web"}
+        debugargs {"-b", "RailroadLantern.obr"}
 
 
 -- Linux
 
-    configuration {"linux"}
+    configuration {"linux", "not web"}
         postbuildcommands {"cp -f $(ORX)/lib/dynamic/liborx*.so " .. copybase .. "/bin"}
 
 
 -- Mac OS X
 
-    configuration {"macosx", "xcode*"}
+    configuration {"macosx", "xcode*", "not web"}
         postbuildcommands {"cp -f ../lib/dynamic/liborx*.dylib " .. copybase .. "/bin"}
 
-    configuration {"macosx", "not xcode*"}
+    configuration {"macosx", "not xcode*", "not web"}
         postbuildcommands {"cp -f $(ORX)/lib/dynamic/liborx*.dylib " .. copybase .. "/bin"}
 
 
 -- Windows
 
-    configuration {"windows"}
+    configuration {"windows", "not web"}
         postbuildcommands {"cmd /c copy /Y $(ORX)\\lib\\dynamic\\orx*.dll " .. path.translate(copybase, "\\") .. "\\bin"}

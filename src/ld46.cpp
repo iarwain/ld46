@@ -11,9 +11,15 @@
 #include "Train.h"
 #include "Player.h"
 
-#define orxARCHIVE_HEADER_ONLY
-#include "orxArchive.cpp"
-#undef orxARCHIVE_HEADER_ONLY
+#include "orxExtensions.h"
+
+#ifdef __orxMSVC__
+
+ /* Requesting high performance dedicated GPU on hybrid laptops */
+__declspec(dllexport) unsigned long NvOptimusEnablement        = 1;
+__declspec(dllexport) int AmdPowerXpressRequestHighPerformance = 1;
+
+#endif // __orxMSVC__
 
 static orxBOOL sbRestart = orxTRUE;
 
@@ -258,7 +264,7 @@ void ld46::Update(const orxCLOCK_INFO &_rstInfo)
                 }
 
                 orxCHAR acName[32] = {};
-                orxString_NPrint(acName, sizeof(acName) - 1, "%sScore", poPlayer->GetModelName());
+                orxString_NPrint(acName, sizeof(acName) - 1, "%sScore", poPlayer->GetName());
                 orxU32 u32Score = orxConfig_GetU32(acName);
                 if(u32Score > u32HighScore)
                 {
@@ -294,6 +300,9 @@ void ld46::Update(const orxCLOCK_INFO &_rstInfo)
  */
 orxSTATUS ld46::Init()
 {
+    // Init extensions
+    InitExtensions();
+
     // Deactivate object debug messages
     orxDEBUG_ENABLE_LEVEL(orxDEBUG_LEVEL_OBJECT, orxFALSE);
 
@@ -319,7 +328,7 @@ orxSTATUS ld46::Init()
         if(orxConfig_HasValue("Texture"))
         {
             // PreLoads it
-            orxTexture_CreateFromFile(orxConfig_GetString("Texture"), orxFALSE);
+            orxTexture_Load(orxConfig_GetString("Texture"), orxFALSE);
         }
 
         // Has left door?
@@ -363,6 +372,9 @@ orxSTATUS ld46::Run()
  */
 void ld46::Exit()
 {
+    // Exit from extensions
+    ExitExtensions();
+
     // Save highscores
     orxConfig_Save(orxFile_GetApplicationSaveDirectory("RailroadLantern/score.dat"), orxTRUE, &SaveCallback);
 }
@@ -381,13 +393,8 @@ void ld46::BindObjects()
  */
 orxSTATUS ld46::Bootstrap() const
 {
-    // Initialize archive (ZIP) resource type
-    orxArchive_Init();
-
-    // Add a config storage to find the initial config file
-    orxResource_AddStorage(orxCONFIG_KZ_RESOURCE_GROUP, "game.dat", orxFALSE);
-    orxResource_AddStorage(orxCONFIG_KZ_RESOURCE_GROUP, "../data/config", orxFALSE);
-    orxResource_AddStorage(orxCONFIG_KZ_RESOURCE_GROUP, "../data/font", orxFALSE);
+    // Bootstrap extensions
+    BootstrapExtensions();
 
     // Loads scores
     orxConfig_Load(orxFile_GetApplicationSaveDirectory("RailroadLantern/score.dat"));

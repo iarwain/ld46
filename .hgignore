@@ -7,4 +7,5 @@ build/windows/**/.vs/*
 **.cih
 **/dev.ini
 **.dat
-bin/**.png
+bin/
+build/windows/vs2022/RailroadLantern.vcxproj.user
